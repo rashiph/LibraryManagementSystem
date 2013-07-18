@@ -1,4 +1,4 @@
-package com.thoughtworks;
+package com.thoughtworks.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

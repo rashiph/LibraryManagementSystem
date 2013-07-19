@@ -33,5 +33,6 @@
 
         <mapping class="com.thoughtworks.models.Vendor"/>
         <mapping class="com.thoughtworks.models.Product"/>
+        <mapping class="com.thoughtworks.models.Book"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,6 @@
 <div class = "createBook">
-<form name="bookForm" method="GET">
+<form action="/save" method="post" >
+<form name="bookForm" >
 <div class ="book"> BOOKS
 <div class="add-book">
 
@@ -7,6 +8,6 @@
 
 </div>
 
-<input type="submit" name="save" method="POST" action= />
+<button type="submit" name="save" value="save book"/>
 </form>
 </div>

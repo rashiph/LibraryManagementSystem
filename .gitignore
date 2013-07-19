@@ -1,7 +1,11 @@
+*.patch
+*.class
+*.DS_Store
+# Package Files #
+*.jar
+*.war
+*.ear
+
+.idea/*
 target/*
-.settings/*
-.classpath
-.project
-.idea
 *.iml
-/target

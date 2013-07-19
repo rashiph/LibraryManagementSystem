@@ -1,0 +1,1 @@
+\i src/main/resources/seed/vendors.sql

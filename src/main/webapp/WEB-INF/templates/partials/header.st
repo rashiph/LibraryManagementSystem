@@ -1,5 +1,5 @@
 <div class="center-alignment">
-    <h1>Purchase Management System</h1>
+    <h1>Library Management System</h1>
 
 
     <ul>

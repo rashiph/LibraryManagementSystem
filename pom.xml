@@ -131,7 +131,7 @@
     </dependencies>
 
     <build>
-        <finalName>PurchaseManagement</finalName>
+        <finalName>LibraryManagement</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -165,9 +165,9 @@
                 <version>2.1.1</version>
                 <configuration>
                     <user>root</user>
-                    <password></password>
+                    <password>p@ssw0rd</password>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://localhost:3306/purchase_mgmt</url>
+                    <url>jdbc:mysql://localhost:3306/library_mgmt</url>
                 </configuration>
             </plugin>
             <plugin>
@@ -183,9 +183,9 @@
                 </dependencies>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://localhost:3306/purchase_mgmt</url>
+                    <url>jdbc:mysql://localhost:3306/library_mgmt</url>
                     <username>root</username>
-                    <password></password>
+                    <password>p@ssw0rd</password>
                 </configuration>
 
             </plugin>

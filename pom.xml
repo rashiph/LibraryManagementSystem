@@ -161,7 +161,7 @@
 
 		<!-- Database connection pool 
 		See here for more details on commons-dbcp versus tomcat-jdbc: 
-    	http://blog.ippon.fr/2013/03/13/improving-the-performance-of-the-spring-petclinic-sample-application-part-3-of-5/
+    	http://blog.ippon.fr/2013/03/13/improving-the-performance-of-the-spring-library-sample-application-part-3-of-5/
     -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -314,9 +314,34 @@
 			<artifactId>datatables-servlet2</artifactId>
 			<version>${dandelion.datatables.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.2-beta-5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>3.1.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.2.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.2.3.RELEASE</version>
+        </dependency>
 
 
-	</dependencies>
+    </dependencies>
 
 	<!-- Maven plugin versions are mentioned in order to guarantee the build reproducibility in the long term -->
 	<build>
@@ -424,7 +449,7 @@
 				<configuration>
 					<server>tomcat-development-server</server>
 					<port>9966</port>
-					<path>/petclinic</path>
+					<path>/</path>
 				</configuration>
 			</plugin>
 		</plugins>

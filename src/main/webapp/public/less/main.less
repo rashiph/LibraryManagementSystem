@@ -1,0 +1,75 @@
+body {
+  background: rgb(247, 251, 250);
+}
+
+.header {
+   background: rgb(2, 101, 169) url("../img/images.jpeg") no-repeat ;
+   background-size: 30% 100%;
+   border-bottom: 40px solid orange;
+  .heading {
+    position: relative;
+    text-align: center;
+    padding: 35px 0 0 0;
+    height:56px;
+    color: rgb(247, 251, 250);
+    font-size: 40px;
+    margin:0px;
+    text-shadow: 1px 1px black;
+    span{
+      &:before {
+        position: absolute;
+        content: "";
+        width: 0px;
+        height: 0px;
+        left: 368px;
+        border-right: 46px solid rgb(247, 251, 250);
+        top: 0px;
+        border-top: 45px solid transparent;
+        border-bottom: 46px solid transparent;
+      }
+      &:after {
+        position: absolute;
+        content: "";
+        width: 0px;
+        height: 0px;
+        left: 371px;
+        border-right: 46px solid rgb(2, 101, 169);
+        top: 0px;
+        border-top: 45px solid transparent;
+        border-bottom: 46px solid transparent;
+      }
+    }
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background: rgb(2, 101, 169);
+  padding: 5px;
+  text-align: center;
+  color: rgb(247, 251, 250);
+}
+
+.content {
+  margin-top: 10px;
+}
+
+.sidebar {
+  background: rgb(2, 101, 169);
+  ul {
+    list-style: none;
+    margin: 0px;
+    li {
+      padding: 10px;
+      border-bottom: 1px solid rgb(247, 251, 250);
+      &:hover {
+      }
+    }
+    a {
+      color: #f6f6f6;
+      text-decoration: none;
+    }
+  }
+}

@@ -1,13 +1,13 @@
-<div class = "createBook">
-<form action="/save" method="post" >
-<form name="bookForm" >
-<div class ="book"> BOOKS
-<div class="add-book">
-
-   Name:    <input type="text" name="name"   />
-
-</div>
-
-<button type="submit" name="save" value="save book"/>
-</form>
+<div class="row-fluid">
+    <form action="/save" method="post" >
+        <div class="span4">
+            <span class="pull-right">Book name: </span>
+        </div>
+        <div class="span8">
+            <input type="text" name="name"/>
+        </div>
+        <div class="pull-right">
+            <input type="submit" class="btn btn-primary" name="save" value="save book"/>
+        </div>
+    </form>
 </div>

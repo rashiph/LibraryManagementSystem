@@ -5,11 +5,11 @@ CREATE TABLE IF NOT EXISTS books(
    category VARCHAR(50),
    edition INTEGER(50),
    price FLOAT(10),
-   dateOfPurchase DATE(50),
+   dateOfPurchase DATE,
    vendor VARCHAR(50),
-   createdDate DATE(50),
+   createdDate DATE,
    createdBy VARCHAR(50),
-   updatedDate DATE(50),
+   updatedDate DATE,
    updatedBy VARCHAR(50),
    isActive VARCHAR(50)
 );

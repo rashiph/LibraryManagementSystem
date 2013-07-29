@@ -2,7 +2,6 @@ package com.thoughtworks.repositories;
 
 import com.thoughtworks.models.Book;
 import com.thoughtworks.utils.HibernateUtil;
-import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

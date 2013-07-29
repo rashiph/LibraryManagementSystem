@@ -16,12 +16,16 @@ import java.util.Date;
 
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Controller
 public class BookController {
     @Autowired
 
     BookService bookService;
+
+    public BookController(BookService bookService){
+       this.bookService = bookService;
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         System.out.println("######################################check1");

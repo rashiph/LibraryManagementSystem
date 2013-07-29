@@ -11,10 +11,15 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 @Repository
-@AllArgsConstructor
 public class BookRepository {
     private SessionFactory sessionFactory;
     private Session session;
+
+    public BookRepository(SessionFactory sessionFactory, Session session) {
+        this.sessionFactory = sessionFactory;
+        this.session = session;
+
+    }
 
     public BookRepository() {
         sessionFactory = HibernateUtil.getSessionFactory();

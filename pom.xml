@@ -165,7 +165,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <user>root</user>
-                    <password>p@ssw0rd</password>
+                    <password></password>
                     <driver>com.mysql.jdbc.Driver</driver>
                     <url>jdbc:mysql://localhost:3306/library_mgmt</url>
                 </configuration>
@@ -185,7 +185,7 @@
                     <driver>com.mysql.jdbc.Driver</driver>
                     <url>jdbc:mysql://localhost:3306/library_mgmt</url>
                     <username>root</username>
-                    <password>p@ssw0rd</password>
+                    <password></password>
                 </configuration>
 
             </plugin>

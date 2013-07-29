@@ -124,6 +124,8 @@ public class Book
         this.updatedBy = updatedBy;
         this.isActive = isActive;
     }
+
+    public Book(){}
 }
 
 

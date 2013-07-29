@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS vendors(
-  vendorId INTEGER SERIAL DEFAULT VALUE UNIQUE NOT NULL,
-  vendorName VARCHAR(30),
-  mobileNumber VARCHAR(11),
-  emailId VARCHAR(50),
-  address VARCHAR(100 ),
-  panNumber VARCHAR(10) UNIQUE,
-  tinNumber VARCHAR(10)
-);

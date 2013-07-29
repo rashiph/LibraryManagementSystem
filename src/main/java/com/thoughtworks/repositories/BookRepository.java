@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 @Repository
 @AllArgsConstructor
 public class BookRepository {
@@ -20,9 +22,9 @@ public class BookRepository {
 
     }
 
-    public void add(String name) {
-        Book book = new Book();
-        book.setName(name);
+    public void add(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,String isActive) {
+
+        Book book = new Book(name,author,category,edition,price,dateOfPurchase,vendor,createdDate,createdBy,updatedDate,updatedBy,isActive);
         session.save("books", book);
         Transaction tx = session.beginTransaction();
         tx.commit();

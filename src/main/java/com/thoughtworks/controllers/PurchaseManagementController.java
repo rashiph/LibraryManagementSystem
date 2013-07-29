@@ -20,7 +20,11 @@ import java.util.List;
 public class PurchaseManagementController {
     @Autowired
     VendorService vendorService;
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
+
+
+
+
+    //    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView getAllVendors() {
         ModelAndView modelAndView = new ModelAndView("newOrder");
         List<Vendor> vendorList = vendorService.getAllVendors();

@@ -3,6 +3,7 @@
 <head>
     <script src="/public/js/form.js"></script>
     <script src="/public/js/jquery.js"></script>
+    <script src="/public/js/jquery-ui-1.10.3.custom.js"></script>
     <script src="/public/js/validation.js"></script>
     <link href="/public/css/bootstrap.css" rel="stylesheet" type="text/css"></link>
     <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>

@@ -39,3 +39,7 @@ function validate()
 
 }
 
+ $(function() {
+$( "#date" ).datepicker();
+});
+

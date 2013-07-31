@@ -3,12 +3,12 @@
 <div class ="book"> BOOKS
 <div class="add-book">
 
-   Name:    <input type="text" name="name" placeholder="name"  />   <br>
+   Name:    <input type="text" name="name" placeholder="name"/>   <br>
    author:    <input type="text" name="author" placeholder="author"  />  <br>
    category:    <input type="text" name="category" placeholder="category"  />  <br>
    edition:    <input type="text" name="edition"  placeholder="edition" />    <br>
-   price:    <input type="text" name="price" placeholder="price"  />        <br>
-   dateOfPurchase:    <input type="text" name="dateOfPurchase" id ="datePicker"placeholder="dd/mm/yyyy"  />   <br>
+   price:    <input type="text" name="price" placeholder="price"  />     <br>
+   dateOfPurchase:    <input type="text" name="dateOfPurchase" placeholder="mm/dd/yyyy" id="date"/>   <br>
    vendor:    <input type="text" name="vendor"  placeholder="vendor" />                 <br>
 </div>
   </div>

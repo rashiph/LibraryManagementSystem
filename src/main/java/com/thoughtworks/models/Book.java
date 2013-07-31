@@ -109,7 +109,13 @@ public class Book
     {
         return isActive;
     }
-    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,String isActive) {
+
+    public Book(){
+
+    }
+
+    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,
+                Date createdDate,String createdBy,Date updatedDate,String updatedBy,String isActive) {
 
         this.name = name;
         this.author = author;
@@ -125,7 +131,6 @@ public class Book
         this.isActive = isActive;
     }
 
-    public Book(){}
 }
 
 

@@ -1,5 +1,6 @@
 package com.thoughtworks.controllers;
 
+import com.thoughtworks.models.Book;
 import com.thoughtworks.services.BookService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -28,9 +30,8 @@ public class BookController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
-        System.out.println("######################################check1");
+
         ModelAndView modelAndView = new ModelAndView("addBook");
-        System.out.println("check2");
 
         return modelAndView;
     }
@@ -38,12 +39,8 @@ public class BookController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
 
     public ModelAndView addBook(@RequestParam("name") String name,@RequestParam("author") String author,@RequestParam("category") String category,@RequestParam("edition") String edition,@RequestParam("price") String price,@RequestParam("dateOfPurchase") String dateOfPurchase,@RequestParam("vendor") String vendor) throws ParseException {
-        System.out.println("check3");
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
         Date date = new Date();
-//        DateTimeFormatter formatter = ISODateTimeFormat.date();
-
-
          String createdBy = null;
         String updatedBy = null;
         String isActive = null;
@@ -56,5 +53,12 @@ public class BookController {
         ModelAndView modelAndView = new ModelAndView("addBook");
         bookService.add(name,author,category,edition1,price1,dateOfPurchase1,vendor,date,createdBy,date,updatedBy,isActive);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List<Book> getAllBook()
+    {
+      List<Book> books = bookService.getAll();
+      return books;
     }
 }

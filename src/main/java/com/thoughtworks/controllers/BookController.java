@@ -43,7 +43,7 @@ public class BookController {
         Date date = new Date();
          String createdBy = null;
         String updatedBy = null;
-        String isActive = null;
+        boolean isActive = true;
 
         Date dateOfPurchase1 = dateFormat.parse(dateOfPurchase);
 
@@ -62,6 +62,7 @@ public class BookController {
       return books;
     }
 
+
     @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
     public ModelAndView getBook()    {
 
@@ -70,4 +71,15 @@ public class BookController {
         bookService.get(searchId);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
+    public void deleteBook()
+    {
+        String id = "87";
+        bookService.deleteBook(id);
+
+    }
+
+
+
 }

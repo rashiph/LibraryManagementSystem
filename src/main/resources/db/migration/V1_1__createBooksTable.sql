@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS books(
    createdBy VARCHAR(50),
    updatedDate DATE,
    updatedBy VARCHAR(50),
-   isActive VARCHAR(50)
+   isActive BOOLEAN
 );

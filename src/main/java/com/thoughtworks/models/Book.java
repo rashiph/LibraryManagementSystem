@@ -103,9 +103,9 @@ public class Book
     }
     //
     @Column(name = "isActive")
-    private String isActive;
+    private boolean isActive;
 
-    public String getIsActive()
+    public boolean getIsActive()
     {
         return isActive;
     }
@@ -115,7 +115,7 @@ public class Book
     }
 
     public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,
-                Date createdDate,String createdBy,Date updatedDate,String updatedBy,String isActive) {
+                Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive) {
 
         this.name = name;
         this.author = author;

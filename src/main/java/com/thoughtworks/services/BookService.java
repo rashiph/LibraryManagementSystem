@@ -26,4 +26,7 @@ public class BookService {
     {
       return bookRepository.getAllBooks();
     }
+    public void get(String searchId){
+        bookRepository.get(searchId);
+    }
 }

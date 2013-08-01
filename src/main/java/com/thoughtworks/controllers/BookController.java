@@ -61,4 +61,13 @@ public class BookController {
       List<Book> books = bookService.getAll();
       return books;
     }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ModelAndView getBook()    {
+
+        String searchId="4";
+        ModelAndView modelAndView = new ModelAndView("getBook");
+        bookService.get(searchId);
+        return modelAndView;
+    }
 }

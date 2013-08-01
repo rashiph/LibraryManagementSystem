@@ -3,18 +3,19 @@
 <head>
     <script src="/public/js/form.js"></script>
     <script src="/public/js/jquery.js"></script>
-    <script src="/public/js/jquery-ui-1.10.3.custom.js"></script>
     <script src="/public/js/validation.js"></script>
+    <script src="/public/js/jquery-ui.js"></script>
     <link href="/public/css/bootstrap.css" rel="stylesheet" type="text/css"></link>
     <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
     <link href="/public/css/main.css" rel="stylesheet" type="text/css"></link>
+    <link href="/public/css/jquery-ui.css" rel="stylesheet" type="text/css"></link>
+
 
 </head>
 <body>
-    <div class="header">$partials/header()$</div>
-    <div class="row-fluid">
-        <div class="span2 sidebar">$partials/sidebar()$</div>
-        <div class="span8 content">
+    <div class="header row">$partials/header()$</div>
+    <div>
+        <div class="content">
             <div>$body$</div>
         </div>
     <div class="footer">$partials/footer()$</div>

@@ -64,12 +64,16 @@ public class BookController {
 
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
-    public ModelAndView getBook()    {
+    public void getBook()    {
 
-        String searchId="4";
-        ModelAndView modelAndView = new ModelAndView("getBook");
-        bookService.get(searchId);
-        return modelAndView;
+        int searchId=88;
+        Book book=  bookService.get(searchId);
+        System.out.println("******************************************");
+        System.out.println(book.getName());
+        System.out.println(book.getAuthor());
+        System.out.println(book.getCategory());
+        System.out.println(book.getDateOfPurchase());
+        System.out.println("############################################");
     }
 
     @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")

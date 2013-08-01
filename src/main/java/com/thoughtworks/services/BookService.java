@@ -26,8 +26,8 @@ public class BookService {
     {
       return bookRepository.getAllBooks();
     }
-    public void get(String searchId){
-        bookRepository.get(searchId);
+    public Book get(int searchId){
+       return bookRepository.getOneBook(searchId);
 
     }
     public void deleteBook(String id)

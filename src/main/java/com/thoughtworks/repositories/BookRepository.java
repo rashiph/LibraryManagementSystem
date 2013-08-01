@@ -41,21 +41,13 @@ public class BookRepository {
 
     }
 
-    public Book get(String searchId)
+    public Book getOneBook(int searchId)
     {
-
-       Book obj = null;
-        String query = "from Book as b where b.id = :sId";
-        List<Book> listofbooks = session.createQuery(query).setString("sId", searchId).list();
-
-        Iterator iterator = listofbooks.iterator();
-
-        while (iterator.hasNext()) {
-            obj = (Book) iterator.next();
-
-            System.out.print("###################"+obj.getName() + "\t" + obj.getAuthor() + "\t" + obj.getCategory() +obj.getEdition() + "\t" + obj.getPrice() + "\t" + obj.getDateOfPurchase() +"\t"+ obj.getVendor()+"\t"+obj.getCreatedDate()+"\t"+obj.getCreatedBy()+"\t"+obj.getUpdatedDate()+"\t"+obj.getIsActive());
-    }
-        return  obj;
+        Session session =   sessionFactory.openSession();
+        session.beginTransaction();
+        Book book = (Book) session.get(Book.class,searchId);
+        session.getTransaction().commit();
+        return book;
     }
 
     public List<Book> getAllBooks()

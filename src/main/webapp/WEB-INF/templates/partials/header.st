@@ -1,7 +1,10 @@
-<div class="header-image col-4"></div>
-<div class="heading col-8">
-    <span>Library Management System</span>
+<div class="row">
+    <div class="header-image col-3"></div>
+    <div class="heading col-9">
+        <span>Library Management System</span>
+    </div>
 </div>
+
 <div>
     <ul class="nav nav-tabs">
       <li class="active">
@@ -12,3 +15,5 @@
       </li>
     </ul>
 </div>
+
+

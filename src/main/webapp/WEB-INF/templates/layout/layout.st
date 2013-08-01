@@ -13,11 +13,10 @@
 
 </head>
 <body>
-    <div class="header row">$partials/header()$</div>
-    <div>
-        <div class="content">
-            <div>$body$</div>
-        </div>
+    <div class="header">$partials/header()$</div>
+    <div class="content">
+        <div>$body$</div>
+    </div>
     <div class="footer">$partials/footer()$</div>
 </body>
 </html>

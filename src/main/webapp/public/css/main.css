@@ -35,14 +35,23 @@ body {
   border-top: 45px solid transparent;
   border-bottom: 46px solid transparent;
 }
-.header .nav {
-  margin-left: 10px;
-}
-.header .nav active:hover {
-  background: #02a965;
-}
 .header .nav li {
-  margin: 10px 5px 0px 5px;
+  margin: 10px 0px 0px 10px;
+}
+.header .nav li a:hover,
+.header .nav li a:active {
+  color: #f7fbfa;
+  background: #0265a9;
+}
+.header .nav li.active a {
+  color: #f7fbfa;
+  background: #0265a9;
+}
+.content {
+  margin-top: 10px;
+}
+.content .form-horizontal {
+  margin: 20px;
 }
 .footer {
   position: absolute;
@@ -52,7 +61,4 @@ body {
   padding: 5px;
   text-align: center;
   color: #f7fbfa;
-}
-.content {
-  margin-top: 10px;
 }

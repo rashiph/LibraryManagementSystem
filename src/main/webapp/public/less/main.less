@@ -38,13 +38,26 @@ body {
     }
   }
   .nav {
-    margin-left: 10px;
-    active:hover {
-      background: rgb(2,169,101);
-    }
     li {
-      margin: 10px 5px 0px 5px;
+      margin: 10px 0px 0px 10px;
+      a {
+        &:hover, &:active {
+          color: rgb(247, 251, 250);
+          background: rgb(2, 101, 169);
+        }
+      }
     }
+    li.active a{
+      color: rgb(247, 251, 250);
+      background: rgb(2, 101, 169);
+    }
+  }
+}
+
+.content {
+  margin-top: 10px;
+  .form-horizontal {
+    margin: 20px;
   }
 }
 
@@ -56,8 +69,4 @@ body {
   padding: 5px;
   text-align: center;
   color: rgb(247, 251, 250);
-}
-
-.content {
-  margin-top: 10px;
 }

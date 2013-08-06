@@ -13,63 +13,63 @@ public class Book
 
     @Id
     private int id;
-//
+    //
     @Column(name = "name")
     private String name;
 
     public String getName()
-     {
-         return name;
-     }
-//
+    {
+        return name;
+    }
+    //
     @Column(name = "author")
     private String author;
 
     public String getAuthor()
-     {
+    {
         return author;
-     }
-//
+    }
+    //
     @Column(name = "category")
     private String category;
 
     public String getCategory()
-     {
+    {
         return category;
-     }
-//
+    }
+    //
     @Column(name = "edition")
     private int edition;
 
     public int getEdition()
-     {
+    {
         return edition;
-     }
-//
+    }
+    //
     @Column(name = "price")
     private Float price;
 
     public Float getPrice()
-     {
+    {
         return price;
-     }
-//
-   @Column(name = "dateOfPurchase")
-   private Date dateOfPurchase;
+    }
+    //
+    @Column(name = "dateOfPurchase")
+    private Date dateOfPurchase;
 
     public Date getDateOfPurchase()
     {
         return dateOfPurchase;
     }
-//
-   @Column(name = "vendor")
-   private String vendor;
+    //
+    @Column(name = "vendor")
+    private String vendor;
 
     public String getVendor()
     {
         return vendor;
     }
- //
+    //
     @Column(name = "createdDate")
     private Date createdDate;
 
@@ -77,7 +77,7 @@ public class Book
     {
         return createdDate;
     }
-//
+    //
     @Column(name = "createdBy")
     private String createdBy;
 
@@ -114,8 +114,7 @@ public class Book
 
     }
 
-    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,
-                Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive) {
+    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive) {
 
         this.name = name;
         this.author = author;

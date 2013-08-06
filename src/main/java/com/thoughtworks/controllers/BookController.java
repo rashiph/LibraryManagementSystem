@@ -5,6 +5,7 @@ import com.thoughtworks.services.BookService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 
 @NoArgsConstructor
 @Controller
@@ -25,7 +28,7 @@ public class BookController {
     BookService bookService;
 
     public BookController(BookService bookService){
-       this.bookService = bookService;
+        this.bookService = bookService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -38,10 +41,10 @@ public class BookController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
 
-    public ModelAndView addBook(@RequestParam("name") String name,@RequestParam("author") String author,@RequestParam("category") String category,@RequestParam("edition") String edition,@RequestParam("price") String price,@RequestParam("dateOfPurchase") String dateOfPurchase,@RequestParam("vendor") String vendor) throws ParseException {
+    public ModelAndView addBook(@RequestParam("bookName") String bookName,@RequestParam("authorName") String authorName,@RequestParam("category") String category,@RequestParam("edition") String edition,@RequestParam("price") String price,@RequestParam("dateOfPurchase") String dateOfPurchase,@RequestParam("vendor") String vendor) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
         Date date = new Date();
-         String createdBy = null;
+        String createdBy = null;
         String updatedBy = null;
         boolean isActive = true;
 
@@ -51,39 +54,52 @@ public class BookController {
         int edition1 = Integer.parseInt(edition);
         float price1 = Float.parseFloat(price);
         ModelAndView modelAndView = new ModelAndView("addBook");
-        bookService.add(name,author,category,edition1,price1,dateOfPurchase1,vendor,date,createdBy,date,updatedBy,isActive);
+        bookService.add(bookName,authorName,category,edition1,price1,dateOfPurchase1,vendor,date,createdBy,date,updatedBy,isActive);
         return modelAndView;
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<Book> getAllBook()
     {
-      List<Book> books = bookService.getAll();
-      return books;
+        List<Book> books = bookService.getAll();
+        return books;
     }
 
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
-    public void getBook()    {
+    public void getBook()
+    {
 
         int searchId=88;
         Book book=  bookService.get(searchId);
-        System.out.println("******************************************");
         System.out.println(book.getName());
-        System.out.println(book.getAuthor());
-        System.out.println(book.getCategory());
-        System.out.println(book.getDateOfPurchase());
-        System.out.println("############################################");
     }
 
     @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
     public void deleteBook()
     {
-        String id = "87";
-        bookService.deleteBook(id);
+        int id = 97;
+        Book book = bookService.deleteBook(id);
+        System.out.println(book.getName());
 
     }
 
 
+    @RequestMapping(value = "/issue_book", method = RequestMethod.GET)
+    public ModelAndView issue_request()
+    {
+        ModelAndView modelAndView = new ModelAndView("issue_book");
 
+        return modelAndView;
+    }
+    @RequestMapping(value = "/issue", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ModelAndView issue(@RequestParam("bookId") int bookId)
+    {
+        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+        Date date = new Date();
+        int employeeId=0;
+        Date returnedDate=null;
+        bookService.issue(bookId,date,returnedDate,employeeId);
+        return new ModelAndView(" issue_book ");
+    }
 }

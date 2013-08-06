@@ -32,5 +32,6 @@
 		<property name="current_session_context_class">thread</property>
 
 		<mapping class="com.thoughtworks.models.Book"/>
+		<mapping class="com.thoughtworks.models.IssueBook"/>
 	</session-factory>
 </hibernate-configuration>

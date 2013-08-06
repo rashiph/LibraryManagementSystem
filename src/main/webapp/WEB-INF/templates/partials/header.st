@@ -13,6 +13,9 @@
       <li>
           <a href="#">Search a book</a>
       </li>
+       <li>
+           <a href="/issue_book">issue a book</a>
+        </li>
     </ul>
 </div>
 

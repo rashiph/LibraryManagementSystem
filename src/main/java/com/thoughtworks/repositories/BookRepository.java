@@ -1,12 +1,12 @@
 package com.thoughtworks.repositories;
 
 import com.thoughtworks.models.Book;
+import com.thoughtworks.models.IssueBook;
 import com.thoughtworks.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,10 +27,12 @@ public class BookRepository {
 
     public BookRepository() {
         sessionFactory = HibernateUtil.getSessionFactory();
-        session = sessionFactory.openSession();
+
 
     }
     public void add(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive) {
+        Session session =   sessionFactory.openSession();
+        session.beginTransaction();
 
         Book book = new Book(name,author,category,edition,price,dateOfPurchase,vendor,createdDate,createdBy,updatedDate,updatedBy,isActive);
         session.save("books", book);
@@ -52,24 +54,42 @@ public class BookRepository {
 
     public List<Book> getAllBooks()
     {
-        List <Book> listOfBooks = new ArrayList<Book>();
+        Session session =   sessionFactory.openSession();
+        session.beginTransaction();
+        ArrayList <Book> listOfBooks = new ArrayList<Book>();
         Query query =  session.createQuery("from Book b where isActive = true");
-       List list = query.list();
-       Iterator<Book> itr = list.iterator();
-      while(itr.hasNext())
-      {
-          listOfBooks.add(itr.next());
-      }
-     return  listOfBooks;
+        List list = query.list();
+        Iterator<Book> itr = list.iterator();
+        while(itr.hasNext())
+        {
+            listOfBooks.add(itr.next());
+        }
+        session.getTransaction().commit();
+        return  listOfBooks;
     }
 
-    public void delete(String id){
+    public Book delete(int id){
         Session session =   sessionFactory.openSession();
         session.beginTransaction();
 
         Query query =  session.createQuery("UPDATE Book set isActive=false where id="+id);
         query.executeUpdate();
         session.getTransaction().commit();
+        Book book = (Book) session.get(Book.class,id);
+        return book;
+    }
+
+    public void issueBook(int bookId,Date issueDate,Date returnedDate,int employeeId)
+    {
+        Session session =   sessionFactory.openSession();
+        session.beginTransaction();
+
+        IssueBook objIssueBook = new IssueBook(bookId,issueDate,returnedDate,employeeId);
+        session.save("issued_book", objIssueBook);
+
+        Transaction tx = session.beginTransaction();
+        tx.commit();
+
     }
 }
 

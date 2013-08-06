@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS issued_book(
+id INTEGER SERIAL DEFAULT VALUE UNIQUE NOT NULL,
+bookId INTEGER(50),
+issueDate DATE,
+returnedDate DATE,
+employeeId INTEGER
+);

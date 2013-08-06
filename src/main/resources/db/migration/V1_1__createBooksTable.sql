@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS books(
    author VARCHAR(50),
    category VARCHAR(50),
    edition INTEGER(50),
+   noOfCopies INTEGER(50),
    price FLOAT(10),
    dateOfPurchase DATE,
    vendor VARCHAR(50),

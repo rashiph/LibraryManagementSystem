@@ -49,6 +49,7 @@ public class BookController {
         Date date = new Date();
         String createdBy = null;
         String updatedBy = null;
+        int noOfCopies = 1;
         boolean isActive = true;
 
         Date dateOfPurchase1 = dateFormat.parse(dateOfPurchase);
@@ -57,7 +58,7 @@ public class BookController {
         int edition1 = Integer.parseInt(edition);
         float price1 = Float.parseFloat(price);
         ModelAndView modelAndView = new ModelAndView("addBook");
-        bookService.add(bookName,authorName,category,edition1,price1,dateOfPurchase1,vendor,date,createdBy,date,updatedBy,isActive);
+        bookService.add(bookName,authorName,category,edition1,price1,dateOfPurchase1,vendor,date,createdBy,date,updatedBy,isActive, noOfCopies);
 
         return modelAndView;
     }

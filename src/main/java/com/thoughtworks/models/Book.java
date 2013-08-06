@@ -109,12 +109,21 @@ public class Book
     {
         return isActive;
     }
+//
+@Column(name = "noOfCopies")
+private int noOfCopies;
+
+    public int getNoOfCopies()
+    {
+        return noOfCopies;
+    }
+
 
     public Book(){
 
     }
 
-    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive) {
+    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive,int noOfCopies) {
 
         this.name = name;
         this.author = author;
@@ -128,6 +137,7 @@ public class Book
         this.updatedDate = updatedDate;
         this.updatedBy = updatedBy;
         this.isActive = isActive;
+        this.noOfCopies = noOfCopies;
     }
 
 }

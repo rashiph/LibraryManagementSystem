@@ -21,6 +21,19 @@
 		<datatables:column title="Name">
 			<c:out value="${book.name}"></c:out>
 		</datatables:column>
+		<datatables:column title="Author">
+        			<c:out value="${book.author}"></c:out>
+        </datatables:column>
+        <datatables:column title="Category">
+                	<c:out value="${book.category}"></c:out>
+        </datatables:column>
+        <datatables:column title="Edition">
+                        	<c:out value="${book.edition}"></c:out>
+         </datatables:column>
+       <datatables:column title="NoOfCopies">
+                   <c:out value="${book.noOfCopies}"></c:out>
+       </datatables:column>
+
 		<%--<datatables:column title="Specialties">--%>
 			<%--<c:forEach var="specialty" items="${vet.specialties}">--%>
 				<%--<c:out value="${specialty.name}"/>--%>

@@ -57,7 +57,7 @@ public class BookController {
     } else {
       this.bookService.save(book);
       status.setComplete();
-      return "redirect:/book/index";
+      return "redirect:/";
     }
   }
 

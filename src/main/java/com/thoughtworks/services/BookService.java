@@ -15,9 +15,9 @@ public class BookService {
   @Autowired
   BookRepository bookRepository;
 
-  public void add(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
-    new BookRepository().addBooks(name, author, category, edition, price, dateOfPurchase, vendor, createdDate, createdBy, updatedDate, updatedBy, isActive, noOfCopies);
-  }
+//  public void add(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
+//    new BookRepository().addBooks(name, author, category, edition, price, dateOfPurchase, vendor, createdDate, createdBy, updatedDate, updatedBy, isActive, noOfCopies);
+//  }
 
   public BookService(BookRepository bookRepository) {
     this.bookRepository = bookRepository;
@@ -39,7 +39,13 @@ public class BookService {
     bookRepository.issueBook(bookId, issueDate, returnedDate, employeeId);
   }
 
+
   public void save(Book book) {
     bookRepository.save(book);
   }
+
 }
+
+
+
+

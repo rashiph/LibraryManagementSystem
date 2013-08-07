@@ -1,10 +1,12 @@
 package com.thoughtworks.repositories;
 
 import com.thoughtworks.models.Book;
+import com.thoughtworks.models.IssueBook;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.Date;
@@ -16,28 +18,39 @@ public class BookRepository {
   @PersistenceContext
   private EntityManager entityManager;
 
-  public void addBooks(String bookName, String authorName, String category, int edition, float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
-//        Book book =
-  }
+//    public void addBooks(String bookName,String authorName,String category,int edition,float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive, int noOfCopies)
+//    {
+//        Book book = new Book(bookName,authorName,category,edition,price,dateOfPurchase,vendor,createdDate,createdBy,updatedDate,updatedBy,isActive, noOfCopies);
+//        entityManager.createEntityGraph("Book");
+//    }
 
-  public Book getOneBook(int searchId) {
+    public Book getOneBook(int searchId)
+     {
 
-    return entityManager.find(Book.class, searchId);
-  }
+        return this.entityManager.find(Book.class,searchId);
+     }
 
-  public List getAllBooks() {
+     public List getAllBooks()
+     {
 
-    return this.entityManager.createQuery("SELECT distinct book FROM Book book").getResultList();
+        return this.entityManager.createQuery("SELECT distinct book FROM Book book").getResultList();
+      }
 
-  }
+     public Book delete(int id)
+     {
+         entityManager.getCriteriaBuilder();
 
-  public Book delete(int id) {
+        Book book =(Book)this.entityManager.find(Book.class,id);
 
-    return null;
-  }
+//        book.setIsActive(false);
+        return book;
+     }
 
-  public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId) {
 
+  public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId)
+  {
+      IssueBook issueBook = new IssueBook(bookId, issueDate, returnedDate, employeeId);
+      this.entityManager.persist(issueBook);
   }
 
   public void save(Book book) {

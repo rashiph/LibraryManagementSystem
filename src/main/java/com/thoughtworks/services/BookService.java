@@ -12,44 +12,34 @@ import java.util.List;
 @Service
 @NoArgsConstructor
 public class BookService {
-    @Autowired
-    BookRepository bookRepository;
+  @Autowired
+  BookRepository bookRepository;
 
-    public void add(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor, Date createdDate,String createdBy, Date updatedDate,String updatedBy,boolean isActive,int  noOfCopies)
-    {
-        new BookRepository().addBooks(name,author,category,edition,price,dateOfPurchase,vendor,createdDate,createdBy,updatedDate,updatedBy,isActive,noOfCopies);
-    }
+  public void add(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
+    new BookRepository().addBooks(name, author, category, edition, price, dateOfPurchase, vendor, createdDate, createdBy, updatedDate, updatedBy, isActive, noOfCopies);
+  }
 
+  public BookService(BookRepository bookRepository) {
+    this.bookRepository = bookRepository;
+  }
 
+  public List getAll() {
+    return bookRepository.getAllBooks();
+  }
 
-    public BookService(BookRepository bookRepository){
-        this.bookRepository = bookRepository;
-    }
+  public Book get(int searchId) {
+    return bookRepository.getOneBook(searchId);
+  }
 
-    public List getAll()
-    {
-        return bookRepository.getAllBooks();
-    }
+  public Book deleteBook(int id) {
+    return bookRepository.delete(id);
+  }
 
+  public void issue(int bookId, Date issueDate, Date returnedDate, int employeeId) {
+    bookRepository.issueBook(bookId, issueDate, returnedDate, employeeId);
+  }
 
-
-    public Book get(int searchId){
-        return bookRepository.getOneBook(searchId);
-
-    }
-
-
-
-    public Book deleteBook(int id)
-    {
-       return bookRepository.delete(id);
-
-    }
-
-
-    public void issue(int bookId,Date issueDate,Date returnedDate,int employeeId)
-    {
-        bookRepository.issueBook(bookId,issueDate,returnedDate,employeeId);
-    }
-
+  public void save(Book book) {
+    bookRepository.save(book);
+  }
 }

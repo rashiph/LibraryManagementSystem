@@ -2,143 +2,138 @@ package com.thoughtworks.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
 @Table(name = "books")
-public class Book
-{
+public class Book extends BaseEntity {
 
-    @Id
-    private int id;
-    //
-    @Column(name = "name")
-    private String name;
+  //
+  @Column(name = "name")
+  private String name;
 
-    public String getName()
-    {
-        return name;
-    }
-    //
-    @Column(name = "author")
-    private String author;
+  public String getName() {
+    return name;
+  }
 
-    public String getAuthor()
-    {
-        return author;
-    }
-    //
-    @Column(name = "category")
-    private String category;
+  //
+  @Column(name = "author")
+  private String author;
 
-    public String getCategory()
-    {
-        return category;
-    }
-    //
-    @Column(name = "edition")
-    private int edition;
+  public String getAuthor() {
+    return author;
+  }
 
-    public int getEdition()
-    {
-        return edition;
-    }
-    //
-    @Column(name = "price")
-    private Float price;
+  //
+  @Column(name = "category")
+  private String category;
 
-    public Float getPrice()
-    {
-        return price;
-    }
-    //
-    @Column(name = "dateOfPurchase")
-    private Date dateOfPurchase;
+  public String getCategory() {
+    return category;
+  }
 
-    public Date getDateOfPurchase()
-    {
-        return dateOfPurchase;
-    }
-    //
-    @Column(name = "vendor")
-    private String vendor;
+  //
+  @Column(name = "edition")
+  private int edition;
 
-    public String getVendor()
-    {
-        return vendor;
-    }
-    //
-    @Column(name = "createdDate")
-    private Date createdDate;
+  public int getEdition() {
+    return edition;
+  }
 
-    public Date getCreatedDate()
-    {
-        return createdDate;
-    }
-    //
-    @Column(name = "createdBy")
-    private String createdBy;
+  //
+  @Column(name = "price")
+  private Float price;
 
-    public String getCreatedBy()
-    {
-        return createdBy;
-    }
-    //
-    @Column(name = "updatedDate")
-    private Date updatedDate;
+  public Float getPrice() {
+    return price;
+  }
 
-    public Date getUpdatedDate()
-    {
-        return updatedDate;
-    }
-    //
-    @Column(name = "updatedBy")
-    private String updatedBy;
+  //
+  @Column(name = "dateOfPurchase")
+  private Date dateOfPurchase;
 
-    public String getUpdatedBy()
-    {
-        return updatedBy;
-    }
-    //
-    @Column(name = "isActive")
-    private boolean isActive;
+  public Date getDateOfPurchase() {
+    return dateOfPurchase;
+  }
 
-    public boolean getIsActive()
-    {
-        return isActive;
-    }
-//
-@Column(name = "noOfCopies")
-private int noOfCopies;
+  //
+  @Column(name = "vendor")
+  private String vendor;
 
-    public int getNoOfCopies()
-    {
-        return noOfCopies;
-    }
+  public String getVendor() {
+    return vendor;
+  }
+
+  //
+  @Column(name = "createdDate")
+  private Date createdDate;
+
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+
+  //
+  @Column(name = "createdBy")
+  private String createdBy;
+
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  //
+  @Column(name = "updatedDate")
+  private Date updatedDate;
+
+  public Date getUpdatedDate() {
+    return updatedDate;
+  }
+
+  //
+  @Column(name = "updatedBy")
+  private String updatedBy;
+
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  //
+  @Column(name = "isActive")
+  private boolean isActive;
+
+  public boolean getIsActive() {
+    return isActive;
+  }
+
+  //
+  @Column(name = "noOfCopies")
+  private int noOfCopies;
+
+  public int getNoOfCopies() {
+    return noOfCopies;
+  }
 
 
-    public Book(){
+  public Book() {
 
-    }
+  }
 
-    public Book(String name,String author,String category,int edition,Float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive,int noOfCopies) {
+  public Book(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
 
-        this.name = name;
-        this.author = author;
-        this.category = category;
-        this.edition = edition;
-        this.price = price;
-        this.dateOfPurchase = dateOfPurchase;
-        this.vendor = vendor;
-        this.createdDate = createdDate;
-        this.createdBy = createdBy;
-        this.updatedDate = updatedDate;
-        this.updatedBy = updatedBy;
-        this.isActive = isActive;
-        this.noOfCopies = noOfCopies;
-    }
+    this.name = name;
+    this.author = author;
+    this.category = category;
+    this.edition = edition;
+    this.price = price;
+    this.dateOfPurchase = dateOfPurchase;
+    this.vendor = vendor;
+    this.createdDate = createdDate;
+    this.createdBy = createdBy;
+    this.updatedDate = updatedDate;
+    this.updatedBy = updatedBy;
+    this.isActive = isActive;
+    this.noOfCopies = noOfCopies;
+  }
 
 }
 

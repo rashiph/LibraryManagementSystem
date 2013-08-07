@@ -13,38 +13,40 @@ import java.util.List;
 @Repository
 public class BookRepository {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+  @PersistenceContext
+  private EntityManager entityManager;
 
-    public void addBooks(String bookName,String authorName,String category,int edition,float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive, int noOfCopies)
-    {
+  public void addBooks(String bookName, String authorName, String category, int edition, float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
 //        Book book =
+  }
+
+  public Book getOneBook(int searchId) {
+
+    return entityManager.find(Book.class, searchId);
+  }
+
+  public List getAllBooks() {
+
+    return this.entityManager.createQuery("SELECT distinct book FROM Book book").getResultList();
+
+  }
+
+  public Book delete(int id) {
+
+    return null;
+  }
+
+  public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId) {
+
+  }
+
+  public void save(Book book) {
+    if (book.getId() == null) {
+      this.entityManager.persist(book);
+    } else {
+      this.entityManager.merge(book);
     }
-
-    public Book getOneBook(int searchId)
-    {
-
-        return entityManager.find(Book.class,searchId);
-    }
-
-    public List getAllBooks()
-    {
-
-        return this.entityManager.createQuery("SELECT distinct book FROM Book book").getResultList();
-
-    }
-
-    public Book delete(int id)
-    {
-
-        return null;
-    }
-
-    public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId)
-    {
-
-    }
-
+  }
 }
 
 

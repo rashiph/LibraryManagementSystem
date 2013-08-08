@@ -96,4 +96,12 @@ public class BookController {
     bookService.issue(bookId, date, returnedDate, employeeId);
       return "redirect:/";
   }
+
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String login_request(Map<String, Object>model) {
+//        Admin admin = new Admin();
+//        model.put("admin",admin);
+//        return "book/login";
+//    }
+
 }

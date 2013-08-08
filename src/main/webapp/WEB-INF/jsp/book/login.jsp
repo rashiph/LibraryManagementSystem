@@ -16,23 +16,23 @@
 <div class="container">
 	<jsp:include page="../partials/bodyHeader.jsp"/>
 	<c:choose>
-		<c:when test="${issueBook['issue_book']}"><c:set var="method" value="post"/></c:when>
+		<c:when test="${admin['login']}"><c:set var="method" value="post"/></c:when>
 		<c:otherwise><c:set var="method" value="put"/></c:otherwise>
 	</c:choose>
 
 	<h2>
-		<c:if test="${issueBook['issue_book']}">Issue</c:if> Issue Book
+		<c:if test="${admin['login']}">Issue </c:if> Admin LogIn
 	</h2>
-	<form:form modelAttribute="book" action="/issue_book" method="${method}" class="form-horizontal" id="issue-book-form">
-		<controls:inputField label="bookId" name="bookId"/>
+	<form:form modelAttribute="book" method="${method}" class="form-horizontal" id="issue-book-form">
+		<controls:inputField label="employee Id" name="employeeId"/>
 
 		<div class="form-actions">
 			<c:choose>
-				<c:when test="${issueBook['issue_book']}">
-					<button type="submit">Issue Book</button>
+				<c:when test="${admin['login']}">
+					<button type="submit">login</button>
 				</c:when>
 				<c:otherwise>
-					<button type="submit">Issue Book</button>
+					<button type="submit">LogIn</button>
 				</c:otherwise>
 			</c:choose>
 		</div>

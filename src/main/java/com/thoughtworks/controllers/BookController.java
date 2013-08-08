@@ -2,12 +2,13 @@ package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
-import com.thoughtworks.models.IssueBook;
 import com.thoughtworks.services.BookService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,14 +45,14 @@ public class BookController {
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.GET)
-  public String initCreationForm(Map<String, Object> model) {
+  public String initCreationOfBook(Map<String, Object> model) {
     Book book = new Book();
     model.put("book", book);
     return "book/add";
   }
 
-  @RequestMapping(value = "/new", method = RequestMethod.POST)
-  public String processCreationForm(@Valid Book book, BindingResult result, SessionStatus status) {
+  @RequestMapping(value = "/new", method = RequestMethod.PUT)
+  public String processCreationOfBook(@Valid Book book, BindingResult result, SessionStatus status) {
     if (result.hasErrors()) {
       return "book/add";
     } else {
@@ -61,47 +61,58 @@ public class BookController {
       return "redirect:/";
     }
   }
-  @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
-  public void getBook()
-      {
-        int searchId=88;
-        Book book=  bookService.get(searchId);
-        System.out.println("BookName= "+book.getName());
-      }
 
-    @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
-    public void deleteBook()
-    {
-        int id = 105;
-        Book book = bookService.deleteBook(id);
-        System.out.println(book.getName());
+  @RequestMapping(value = "/books/{bookId}/edit", method = RequestMethod.GET)
+  public String initUpdateOfBook(@PathVariable("bookId") int bookId, Model model) {
+    Book book = this.bookService.get(bookId);
+    model.addAttribute(book);
+    return "book/add";
+  }
+
+  @RequestMapping(value = "/books/{bookId}/edit", method = RequestMethod.PUT)
+  public String processUpdateOfBook(@Valid Book book, BindingResult result, SessionStatus status) {
+    if (result.hasErrors()) {
+      return "book/add";
+    } else {
+      this.bookService.save(book);
+      status.setComplete();
+      return "redirect:/";
     }
+  }
 
+  @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
+  public List getAllBook() {
+    return bookService.getAll();
+  }
 
+  @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
+  public void getBook() {
 
+    int searchId = 88;
+    Book book = bookService.get(searchId);
+    System.out.println(book.getName());
+  }
+
+  @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
+  public void deleteBook() {
+    int id = 97;
+    Book book = bookService.deleteBook(id);
+    System.out.println(book.getName());
+  }
 
   @RequestMapping(value = "/issue_book", method = RequestMethod.GET)
-    public String issue_request(Map<String, Object>model) {
-      IssueBook issueBook = new IssueBook();
-      model.put("book",issueBook);
-      return "book/issue";
-    }
+  public ModelAndView issue_request()
+  {
+    return new ModelAndView("issue_book");
+  }
 
-  @RequestMapping(value = "/issue_book", method = RequestMethod.POST, headers = "Accept=application/json")
-    public String issue(@RequestParam("bookId") int bookId) {
+  @RequestMapping(value = "/issue", method = RequestMethod.POST, headers = "Accept=application/json")
+  public ModelAndView issue(@RequestParam("bookId") int bookId) {
     DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
     Date date = new Date();
     int employeeId = 0;
     Date returnedDate = null;
     bookService.issue(bookId, date, returnedDate, employeeId);
-      return "redirect:/";
+    return new ModelAndView(" issue_book ");
   }
-
-//    @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    public String login_request(Map<String, Object>model) {
-//        Admin admin = new Admin();
-//        model.put("admin",admin);
-//        return "book/login";
-//    }
-
 }

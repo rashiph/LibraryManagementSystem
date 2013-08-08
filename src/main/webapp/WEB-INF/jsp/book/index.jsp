@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="datatables" uri="http://github.com/dandelion/datatables" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html lang="en">
 
@@ -34,7 +35,12 @@
 		<datatables:column title="NoOfCopies">
 			<c:out value="${book.noOfCopies}"></c:out>
 		</datatables:column>
-
+		<datatables:column>
+			<spring:url value="books/{bookId}/edit" var="bookUrl">
+				<spring:param name="bookId" value="${book.id}"/>
+			</spring:url>
+			<a href="${fn:escapeXml(bookUrl)}">Edit Book</a>
+		</datatables:column>
 		<%--<datatables:column title="Specialties">--%>
 		<%--<c:forEach var="specialty" items="${vet.specialties}">--%>
 		<%--<c:out value="${specialty.name}"/>--%>

@@ -1,5 +1,7 @@
 package com.thoughtworks.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -9,7 +11,7 @@ import java.util.Date;
 @Table(name = "books")
 public class Book extends BaseEntity {
 
-  //
+  @NotEmpty
   @Column(name = "name")
   private String name;
 
@@ -17,7 +19,7 @@ public class Book extends BaseEntity {
     return name;
   }
 
-  //
+  @NotEmpty
   @Column(name = "author")
   private String author;
 
@@ -25,7 +27,7 @@ public class Book extends BaseEntity {
     return author;
   }
 
-  //
+  @NotEmpty
   @Column(name = "category")
   private String category;
 
@@ -57,7 +59,7 @@ public class Book extends BaseEntity {
     return dateOfPurchase;
   }
 
-  //
+  @NotEmpty
   @Column(name = "vendor")
   private String vendor;
 

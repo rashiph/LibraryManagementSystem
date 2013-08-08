@@ -51,7 +51,7 @@ public class BookController {
     return "book/add";
   }
 
-  @RequestMapping(value = "/new", method = RequestMethod.PUT)
+  @RequestMapping(value = "/new", method = RequestMethod.POST)
   public String processCreationOfBook(@Valid Book book, BindingResult result, SessionStatus status) {
     if (result.hasErrors()) {
       return "book/add";

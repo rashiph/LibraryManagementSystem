@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +80,26 @@ public class BookController {
       status.setComplete();
       return "redirect:/";
     }
+  }
+  @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
+  public ModelAndView addBook(@RequestParam("bookName") String bookName, @RequestParam("authorName") String authorName, @RequestParam("category") String category, @RequestParam("edition") String edition, @RequestParam("price") String price, @RequestParam("dateOfPurchase") String dateOfPurchase, @RequestParam("vendor") String vendor) throws ParseException {
+
+    DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+    Date date = new Date();
+    String createdBy = null;
+    String updatedBy = null;
+    int noOfCopies = 1;
+    boolean isActive = true;
+
+    Date dateOfPurchase1 = dateFormat.parse(dateOfPurchase);
+
+
+    int edition1 = Integer.parseInt(edition);
+    float price1 = Float.parseFloat(price);
+    ModelAndView modelAndView = new ModelAndView("addBook");
+//    bookService.add(bookName, authorName, category, edition1, price1, dateOfPurchase1, vendor, date, createdBy, date, updatedBy, isActive, noOfCopies);
+
+    return modelAndView;
   }
 
   @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")

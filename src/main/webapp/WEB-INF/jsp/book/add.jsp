@@ -16,8 +16,12 @@
 <div class="container">
 	<jsp:include page="../partials/bodyHeader.jsp"/>
 	<c:choose>
-		<c:when test="${book['new']}"><c:set var="method" value="post"/></c:when>
-		<c:otherwise><c:set var="method" value="put"/></c:otherwise>
+		<c:when test="${book['new']}">
+			<c:set var="method" value="post"/>
+		</c:when>
+		<c:otherwise>
+			<c:set var="method" value="put"/>
+		</c:otherwise>
 	</c:choose>
 
 	<h2>

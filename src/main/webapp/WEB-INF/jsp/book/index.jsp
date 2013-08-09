@@ -15,6 +15,7 @@
 <div class="container">
 	<jsp:include page="../partials/bodyHeader.jsp"/>
 
+
 	<h2>List Of Books</h2>
 
 	<jsp:useBean id="books" scope="request" type="com.thoughtworks.models.Books"/>
@@ -41,12 +42,6 @@
 			</spring:url>
 			<a href="${fn:escapeXml(bookUrl)}">Edit Book</a>
 		</datatables:column>
-		<%--<datatables:column title="Specialties">--%>
-		<%--<c:forEach var="specialty" items="${vet.specialties}">--%>
-		<%--<c:out value="${specialty.name}"/>--%>
-		<%--</c:forEach>--%>
-		<%--<c:if test="${vet.nrOfSpecialties == 0}">none</c:if>--%>
-		<%--</datatables:column>--%>
 	</datatables:table>
 	<jsp:include page="../partials/footer.jsp"/>
 </div>

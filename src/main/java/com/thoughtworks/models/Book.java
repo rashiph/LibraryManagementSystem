@@ -115,28 +115,39 @@ public class Book extends BaseEntity {
     return noOfCopies;
   }
 
+    public void setNoOfCopies(int noOfCopies) {
+        this.noOfCopies= noOfCopies;
+    }
 
-  public Book() {
+    public Book() {
 
-  }
+    }
 
-  public Book(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
+    public Book(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
 
-    this.name = name;
-    this.author = author;
-    this.category = category;
-    this.edition = edition;
-    this.price = price;
-    this.dateOfPurchase = dateOfPurchase;
-    this.vendor = vendor;
-    this.createdDate = createdDate;
-    this.createdBy = createdBy;
-    this.updatedDate = updatedDate;
-    this.updatedBy = updatedBy;
-    this.isActive = isActive;
-    this.noOfCopies = noOfCopies;
-  }
+        this.name = name;
+        this.author = author;
+        this.category = category;
+        this.edition = edition;
+        this.price = price;
+        this.dateOfPurchase = dateOfPurchase;
+        this.vendor = vendor;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.updatedDate = updatedDate;
+        this.updatedBy = updatedBy;
+        this.isActive = isActive;
+        this.noOfCopies = noOfCopies;
+    }
 
+    public Book(String name, String author, String category, int edition,int noOfCopies) {
+
+        this.name = name;
+        this.author = author;
+        this.category = category;
+        this.edition = edition;
+        this.noOfCopies = noOfCopies;
+    }
 }
 
 

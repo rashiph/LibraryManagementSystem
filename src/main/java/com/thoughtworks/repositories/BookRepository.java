@@ -8,9 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +27,17 @@ public class BookRepository {
      public List getAllBooks()
      {
 
-        return this.entityManager.createQuery("SELECT distinct book FROM Book book").getResultList();
+         List<Object[]> results = this.entityManager.createQuery("SELECT b.name AS name, b.author AS author,b.category AS category, b.edition AS edition, COUNT(b) AS total " +
+         "FROM Book AS b GROUP BY b.name, b.author,b.edition ")
+         .getResultList();
+       List<Book> bookList = new ArrayList<Book>();
+       for (Object[] result : results) {
+
+         Book book = new Book((String) result[0], (String) result[1], (String) result[2], ((Number) result[3]).intValue(), ((Number) result[4]).intValue());
+         bookList.add(book);
+       }
+
+       return bookList;
       }
 
      public Book delete(int id)

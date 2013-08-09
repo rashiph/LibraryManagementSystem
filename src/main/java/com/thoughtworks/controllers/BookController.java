@@ -1,5 +1,6 @@
 package com.thoughtworks.controllers;
 
+import com.thoughtworks.models.Admin;
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
 import com.thoughtworks.services.BookService;
@@ -115,4 +116,18 @@ public class BookController {
     bookService.issue(bookId, date, returnedDate, employeeId);
     return new ModelAndView(" issue_book ");
   }
+
+    @RequestMapping(value = "/Admin", method = RequestMethod.GET)
+    public String login_request(Map<String, Object>model) {
+         Admin login = new Admin();
+        model.put("book",login);
+       return "book/login";
+    }
+    @RequestMapping(value = "/Admin", method = RequestMethod.POST, headers = "Accept=application/json")
+    public String login(@RequestParam("employeeId") int employeeId) {
+      boolean isAdmin = (bookService.login(employeeId));
+        System.out.println("********************"+isAdmin);
+     return "redirect:/"  ;
+
+      }
 }

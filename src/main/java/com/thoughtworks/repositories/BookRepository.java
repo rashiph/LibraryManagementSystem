@@ -1,5 +1,7 @@
 package com.thoughtworks.repositories;
 
+//import com.thoughtworks.models.Admin;
+import com.thoughtworks.models.Admin;
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.IssueBook;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,12 +20,6 @@ public class BookRepository {
 
   @PersistenceContext
   private EntityManager entityManager;
-
-//    public void addBooks(String bookName,String authorName,String category,int edition,float price,Date dateOfPurchase,String vendor,Date createdDate,String createdBy,Date updatedDate,String updatedBy,boolean isActive, int noOfCopies)
-//    {
-//        Book book = new Book(bookName,authorName,category,edition,price,dateOfPurchase,vendor,createdDate,createdBy,updatedDate,updatedBy,isActive, noOfCopies);
-//        entityManager.createEntityGraph("Book");
-//    }
 
     public Book getOneBook(int searchId)
      {
@@ -60,6 +57,18 @@ public class BookRepository {
       this.entityManager.merge(book);
     }
   }
+
+    public boolean login(int employeeId)  {
+        Admin admin = this.entityManager.find(Admin.class, employeeId);
+        if (admin==null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+   }
 }
 
 

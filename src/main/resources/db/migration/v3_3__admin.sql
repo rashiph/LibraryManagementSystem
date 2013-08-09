@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS admin(
+id INTEGER SERIAL DEFAULT VALUE NOT NULL ,
+employeeId INTEGER(50),
+userName VARCHAR(50) ,
+isActive Boolean
+
+);

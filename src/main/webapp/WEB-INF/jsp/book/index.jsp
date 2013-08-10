@@ -15,6 +15,9 @@
 <div class="container">
 	<jsp:include page="../partials/bodyHeader.jsp"/>
 
+         <% boolean isAdmin = ${isAdmin};
+          if(isAdmin==true) { %>
+           <li><b><a href="new"> add book </a></b></li> <li><b><a href =""> edit book </a></b></li>
 
 	<h2>List Of Books</h2>
 

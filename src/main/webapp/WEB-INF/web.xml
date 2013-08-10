@@ -31,6 +31,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+	<!-- used so we can use forms of method type 'PUT' and 'DELETE' (such as in the Pet form)
+see here: http://static.springsource.org/spring/docs/current/spring-framework-reference/html/view.html#rest-method-conversion
+-->
+	<filter>
+		<filter-name>httpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>httpMethodFilter</filter-name>
+		<servlet-name>mvc-dispatcher</servlet-name>
+	</filter-mapping>
+
+
 	<!-- Dandelion-Datatables servlet definition -->
 	<servlet>
 		<servlet-name>datatablesController</servlet-name>

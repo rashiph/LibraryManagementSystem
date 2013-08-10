@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,14 +25,18 @@ import java.util.Map;
 
 @NoArgsConstructor
 @Controller
+@SessionAttributes(types = Book.class)
 public class BookController {
   @Autowired
-
   BookService bookService;
 
 
   public BookController(BookService bookService) {
     this.bookService = bookService;
+  }
+  @InitBinder
+  public void setAllowedFields(WebDataBinder dataBinder) {
+    dataBinder.setDisallowedFields("id");
   }
 
   @RequestMapping(value = "/", method = RequestMethod.GET)

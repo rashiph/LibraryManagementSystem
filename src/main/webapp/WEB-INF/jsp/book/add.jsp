@@ -11,7 +11,11 @@
 <html lang="en">
 
 <jsp:include page="../partials/headTag.jsp"/>
-
+<script>
+  $(function () {
+    $("#dateOfPurchase").datepicker({ dateFormat: 'yy/mm/dd'});
+  });
+  </script>
 <body>
 <div class="container">
 	<jsp:include page="../partials/bodyHeader.jsp"/>

@@ -1,5 +1,6 @@
 package com.thoughtworks.models;
 
+import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
 
+@Setter
 @Entity
 @Table(name = "books")
 public class Book extends BaseEntity {
@@ -108,7 +110,6 @@ public class Book extends BaseEntity {
   }
 
   //
-  @Column(name = "noOfCopies")
   private int noOfCopies;
 
   public int getNoOfCopies() {

@@ -19,19 +19,19 @@
 	<datatables:table id="books" data="${books.bookList}" cdn="true" row="book" theme="bootstrap2"
 										cssClass="table table-striped" paginate="false" info="false">
 		<datatables:column title="Name">
-			<c:out value="${book.name}"></c:out>
+			<c:out value="${book.name}"/>
 		</datatables:column>
 		<datatables:column title="Author">
-			<c:out value="${book.author}"></c:out>
+			<c:out value="${book.author}"/>
 		</datatables:column>
 		<datatables:column title="Category">
-			<c:out value="${book.category}"></c:out>
+			<c:out value="${book.category}"/>
 		</datatables:column>
 		<datatables:column title="Edition">
-			<c:out value="${book.edition}"></c:out>
+			<c:out value="${book.edition}"/>
 		</datatables:column>
 		<datatables:column title="Total no. of copies">
-			<c:out value="${book.noOfCopies}"></c:out>
+			<c:out value="${book.noOfCopies}"/>
 		</datatables:column>
 		<datatables:column title="Action">
 			<spring:url value="books/{bookId}/issue" var="issueBookUrl">

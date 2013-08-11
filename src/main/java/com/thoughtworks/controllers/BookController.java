@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -49,15 +50,22 @@ public class BookController {
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.GET)
-  public String initCreationOfBook(Map<String, Object> model) {
-    Book book = new Book();
-    model.put("book", book);
-    return "book/add";
+  public String initCreationOfBook(Map<String, Object> model, HttpServletRequest request) {
+
+    Object attribute = request.getSession().getAttribute("isAdmin");
+    if (attribute != null) {
+      boolean isAdmin = Boolean.parseBoolean(attribute.toString());
+      if (isAdmin) {
+        Book book = new Book();
+        model.put("book", book);
+        return "book/add";
+      }
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.POST)
-  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result,
-                                      SessionStatus status) {
+  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result, SessionStatus status) {
     if (result.hasErrors()) {
       return "book/add";
     } else {

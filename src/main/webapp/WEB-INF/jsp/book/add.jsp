@@ -12,47 +12,65 @@
 
 <jsp:include page="../partials/headTag.jsp"/>
 <script>
-  $(function () {
-    $("#dateOfPurchase").datepicker({ dateFormat: 'yy/mm/dd'});
-  });
-  </script>
+	$(function () {
+		$("#dateOfPurchase").datepicker({ dateFormat: 'yy/mm/dd'});
+	});
+</script>
 <body>
-<div class="container">
-	<jsp:include page="../partials/bodyHeader.jsp"/>
-	<br/><br/>
-	<c:choose>
-		<c:when test="${book['new']}">
-			<c:set var="method" value="post"/>
-		</c:when>
-		<c:otherwise>
-			<c:set var="method" value="put"/>
-		</c:otherwise>
-	</c:choose>
-
-	<h2>
-		<c:if test="${book['new']}">New </c:if> Book
-	</h2>
-	<form:form modelAttribute="book" method="${method}" class="form-horizontal" id="add-book-form">
-		<controls:inputField label="Book Name" name="name"/>
-		<controls:inputField label="Author Name" name="author"/>
-		<controls:inputField label="Category" name="category"/>
-		<controls:inputField label="Edition" name="edition"/>
-		<controls:inputField label="Price" name="price"/>
-		<controls:inputField label="Date Of Purchase" name="dateOfPurchase"/>
-		<controls:inputField label="Vendor" name="vendor"/>
-		<div class="form-actions">
-			<c:choose>
+<jsp:include page="../partials/bodyHeader.jsp"/>
+<div class="content">
+	<div class="container">
+		<div class="page-header">
+			<h1><c:choose>
 				<c:when test="${book['new']}">
-					<button type="submit">Add Book</button>
+					Add New Book
 				</c:when>
 				<c:otherwise>
-					<button type="submit">Update Book</button>
+					Update Book
 				</c:otherwise>
-			</c:choose>
+			</c:choose></h1>
 		</div>
-	</form:form>
-<jsp:include page="../partials/footer.jsp"/>
+		<div class="row">
+			<div class="span6 offset3">
+				<h4 class="widget-header"><i class="icon-th-list"></i> Book Details</h4>
+
+				<div class="widget-body">
+					<div class="center-align">
+						<c:choose>
+							<c:when test="${book['new']}">
+								<c:set var="method" value="post"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="method" value="put"/>
+							</c:otherwise>
+						</c:choose>
+						<form:form modelAttribute="book" method="${method}" class="form-horizontal form-signin-signup"
+											 id="add-book-form">
+							<controls:inputField label="Book Name" name="name"/>
+							<controls:inputField label="Author Name" name="author"/>
+							<controls:inputField label="Category" name="category"/>
+							<controls:inputField label="Edition" name="edition"/>
+							<controls:inputField label="Price" name="price"/>
+							<controls:inputField label="Date Of Purchase" name="dateOfPurchase"/>
+							<controls:inputField label="Vendor" name="vendor"/>
+							<div>
+								<c:choose>
+									<c:when test="${book['new']}">
+										<button type="submit" class="btn btn-primary btn-large">Add Book</button>
+									</c:when>
+									<c:otherwise>
+										<button type="submit" class="btn btn-primary btn-large">Update Book</button>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</form:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+<jsp:include page="../partials/footer.jsp"/>
 </body>
 
 </html>

@@ -1,4 +1,13 @@
-
-<span>Copyright &copy 2013, <a href="http://www.thoughtworks.com">ThoughtWorks</a>, Inc. All rights reserved.</span>
+<footer>
+	<div class="container">
+		<div class="row">
+			<p>
+				&copy; 2013 ThoughtWorks, Inc. All Rights Reserved.
+			</p>
+		</div>
+	</div>
+</footer>
+	<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/resources/js/boot-business.js"></script>
 
 

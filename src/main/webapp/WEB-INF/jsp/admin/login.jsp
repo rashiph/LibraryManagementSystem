@@ -13,19 +13,31 @@
 <jsp:include page="../partials/headTag.jsp"/>
 
 <body>
-<div class="container">
-	<jsp:include page="../partials/bodyHeader.jsp"/>
-	<br/><br/>
-	<h2>
-		Admin Login
-	</h2>
-	<form:form modelAttribute="book" method="post" class="form-horizontal" id="issue-book-form">
-		<controls:inputField label="employee Id" name="employeeId"/>
-
-		<div class="form-actions">
-			<button type="submit">login</button>
+<jsp:include page="../partials/bodyHeader.jsp"/>
+<div class="content">
+	<div class="container">
+		<div class="page-header">
+			<h1>Login</h1>
 		</div>
-	</form:form>
+
+		<div class="row">
+			<div class="span6 offset3">
+				<h4 class="widget-header"><i class="icon-warning-sign"></i> Employee Id</h4>
+
+				<div class="widget-body">
+					<div class="center-align">
+
+						<form:form modelAttribute="login" method="POST" class="form-horizontal form-signin-signup" id="login-form">
+							<controls:inputField label="employee Id" name="employeeId"/>
+							<div>
+								<button type="submit" class="btn btn-primary btn-large">Login</button>
+							</div>
+						</form:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <jsp:include page="../partials/footer.jsp"/>
 </body>

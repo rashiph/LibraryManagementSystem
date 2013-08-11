@@ -8,12 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @NoArgsConstructor
 @Controller
+@SessionAttributes(types = Admin.class)
 public class LoginController {
 
   @Autowired
@@ -26,7 +28,7 @@ public class LoginController {
   @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login_request(Map<String, Object> model) {
     Admin login = new Admin();
-    model.put("book", login);
+    model.put("login", login);
     return "admin/login";
   }
 

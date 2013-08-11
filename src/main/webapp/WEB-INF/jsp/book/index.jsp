@@ -39,17 +39,23 @@
 				<datatables:column title="Total no. of copies">
 					<c:out value="${book.noOfCopies}"/>
 				</datatables:column>
-				<datatables:column title="Action">
+				<datatables:column title="Action" sortable="false" searchable="false">
 					<spring:url value="books/{bookId}/issue" var="issueBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(issueBookUrl)}">Issue</a>
 				</datatables:column>
-				<datatables:column visible="${sessionScope.isAdmin}" title="Admin Action">
+				<datatables:column visible="${sessionScope.isAdmin}" title="Admin Action" sortable="false">
 					<spring:url value="books/{bookId}/edit" var="editBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
-					<a href="${fn:escapeXml(editBookUrl)}">Update</a>
+					<a href="${fn:escapeXml(editBookUrl)}">Update</a> |
+					<spring:url value="books/{bookId}/delete" var="deleteBookUrl">
+						<spring:param name="bookId" value="${book.id}"/>
+					</spring:url>
+					<a href="${fn:escapeXml(deleteBookUrl)}">Delete</a>
+
+
 				</datatables:column>
 			</datatables:table>
 		</div>

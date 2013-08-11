@@ -41,7 +41,7 @@ public class LoginController {
 
   @RequestMapping(value = "/logout", method = RequestMethod.GET)
   public String logout(HttpServletRequest request) {
-    request.getSession().setAttribute("isAdmin", false);
+    request.getSession().setAttribute("isAdmin", null);
     return "redirect:/";
   }
 }

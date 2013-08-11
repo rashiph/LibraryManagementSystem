@@ -39,9 +39,7 @@ public class BookService {
   public void save(Book book) {
     bookRepository.save(book);
   }
-    public boolean login(int EmployeeId) {
-       return bookRepository.login(EmployeeId) ;
-  }
+
 
 }
 

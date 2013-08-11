@@ -15,6 +15,7 @@
 <body>
 <div class="container">
 	<jsp:include page="../partials/bodyHeader.jsp"/>
+	<br/><br/>
 	<c:choose>
 		<c:when test="${book['new']}">
 			<c:set var="method" value="post"/>
@@ -46,8 +47,8 @@
 			</c:choose>
 		</div>
 	</form:form>
-</div>
 <jsp:include page="../partials/footer.jsp"/>
+</div>
 </body>
 
 </html>

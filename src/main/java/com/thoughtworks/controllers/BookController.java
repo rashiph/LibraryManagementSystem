@@ -1,6 +1,5 @@
 package com.thoughtworks.controllers;
 
-import com.thoughtworks.models.Admin;
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
 import com.thoughtworks.services.BookService;
@@ -34,6 +33,7 @@ public class BookController {
   public BookController(BookService bookService) {
     this.bookService = bookService;
   }
+
   @InitBinder
   public void setAllowedFields(WebDataBinder dataBinder) {
     dataBinder.setDisallowedFields("id");
@@ -56,7 +56,8 @@ public class BookController {
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.POST)
-  public String processCreationOfBook(@Valid Book book, BindingResult result, SessionStatus status) {
+  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result,
+                                      SessionStatus status) {
     if (result.hasErrors()) {
       return "book/add";
     } else {
@@ -83,6 +84,7 @@ public class BookController {
       return "redirect:/";
     }
   }
+
   @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
   public ModelAndView addBook(@RequestParam("bookName") String bookName, @RequestParam("authorName") String authorName, @RequestParam("category") String category, @RequestParam("edition") String edition, @RequestParam("price") String price, @RequestParam("dateOfPurchase") String dateOfPurchase, @RequestParam("vendor") String vendor) throws ParseException {
 
@@ -124,13 +126,12 @@ public class BookController {
     System.out.println(book.getName());
   }
 
-  @RequestMapping(value = "/issue_book", method = RequestMethod.GET)
-  public ModelAndView issue_request()
-  {
+  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
+  public ModelAndView issue_request() {
     return new ModelAndView("issue_book");
   }
 
-  @RequestMapping(value = "/issue", method = RequestMethod.POST, headers = "Accept=application/json")
+  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
   public ModelAndView issue(@RequestParam("bookId") int bookId) {
     DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
     Date date = new Date();
@@ -139,18 +140,4 @@ public class BookController {
     bookService.issue(bookId, date, returnedDate, employeeId);
     return new ModelAndView(" issue_book ");
   }
-
-    @RequestMapping(value = "/Admin", method = RequestMethod.GET)
-    public String login_request(Map<String, Object>model) {
-         Admin login = new Admin();
-        model.put("book",login);
-       return "book/login";
-    }
-    @RequestMapping(value = "/Admin", method = RequestMethod.POST, headers = "Accept=application/json")
-    public String login(@RequestParam("employeeId") int employeeId) {
-      boolean isAdmin = (bookService.login(employeeId));
-        System.out.println("********************"+isAdmin);
-     return "redirect:/"  ;
-
-      }
 }

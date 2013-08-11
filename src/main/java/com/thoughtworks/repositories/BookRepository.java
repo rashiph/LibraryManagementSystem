@@ -18,43 +18,39 @@ public class BookRepository {
   @PersistenceContext
   private EntityManager entityManager;
 
-    public Book getOneBook(int searchId)
-     {
+  public Book getOneBook(int searchId) {
 
-        return this.entityManager.find(Book.class,searchId);
-     }
+    return this.entityManager.find(Book.class, searchId);
+  }
 
-     public List getAllBooks()
-     {
+  public List getAllBooks() {
 
-         List<Object[]> results = this.entityManager.createQuery("SELECT b.name AS name, b.author AS author,b.category AS category, b.edition AS edition, COUNT(b) AS total " +
-         "FROM Book AS b GROUP BY b.name, b.author,b.edition ")
-         .getResultList();
-       List<Book> bookList = new ArrayList<Book>();
-       for (Object[] result : results) {
+    List<Object[]> results = this.entityManager.createQuery("SELECT b.name AS name, b.author AS author,b.category AS category, b.edition AS edition, COUNT(b) AS total " +
+        "FROM Book AS b GROUP BY b.name, b.author,b.edition ")
+        .getResultList();
+    List<Book> bookList = new ArrayList<Book>();
+    for (Object[] result : results) {
 
-         Book book = new Book((String) result[0], (String) result[1], (String) result[2], ((Number) result[3]).intValue(), ((Number) result[4]).intValue());
-         bookList.add(book);
-       }
+      Book book = new Book((String) result[0], (String) result[1], (String) result[2], ((Number) result[3]).intValue(), ((Number) result[4]).intValue());
+      bookList.add(book);
+    }
 
-       return bookList;
-      }
+    return bookList;
+  }
 
-     public Book delete(int id)
-     {
-         entityManager.getCriteriaBuilder();
+  public Book delete(int id) {
+    entityManager.getCriteriaBuilder();
 
-        Book book =(Book)this.entityManager.find(Book.class,id);
+    Book book = (Book) this.entityManager.find(Book.class, id);
 
 //        book.setIsActive(false);
-        return book;
-     }
+    return book;
+  }
 
 
-  public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId)
-  {
-      IssueBook issueBook = new IssueBook(bookId, issueDate, returnedDate, employeeId);
-      this.entityManager.persist(issueBook);
+  public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId) {
+    IssueBook issueBook = new IssueBook(bookId, issueDate, returnedDate, employeeId);
+    this.entityManager.persist(issueBook);
   }
 
   public void save(Book book) {
@@ -65,17 +61,7 @@ public class BookRepository {
     }
   }
 
-    public boolean login(int employeeId)  {
-        Admin admin = this.entityManager.find(Admin.class, employeeId);
-        if (admin==null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-   }
+
 }
 
 

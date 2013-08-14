@@ -1,6 +1,5 @@
 package com.thoughtworks.repositories;
 
-//import com.thoughtworks.models.Admin;
 import com.thoughtworks.models.Admin;
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.IssueBook;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,18 +38,14 @@ public class BookRepository {
     return bookList;
   }
 
-  public Book delete(int id) {
-    entityManager.getCriteriaBuilder();
+  public void delete(int id) {
 
-    Book book = (Book) this.entityManager.find(Book.class, id);
-
-//        book.setIsActive(false);
-    return book;
+    entityManager.createQuery("UPDATE Book set isActive = false where id=" + id).executeUpdate();
   }
 
 
-  public void issueBook(int bookId, Date issueDate, Date returnedDate, int employeeId) {
-    IssueBook issueBook = new IssueBook(bookId, issueDate, returnedDate, employeeId);
+  public void issueBook(IssueBook issueBook) {
+
     this.entityManager.persist(issueBook);
   }
 

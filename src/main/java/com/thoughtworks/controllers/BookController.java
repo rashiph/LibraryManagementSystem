@@ -2,6 +2,7 @@ package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
+import com.thoughtworks.models.IssueBook;
 import com.thoughtworks.services.BookService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,38 +115,30 @@ public class BookController {
     return modelAndView;
   }
 
-  @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
-  public List getAllBook() {
-    return bookService.getAll();
-  }
-
-  @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
-  public void getBook() {
-
-    int searchId = 88;
-    Book book = bookService.get(searchId);
-    System.out.println(book.getName());
-  }
 
   @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
-  public void deleteBook() {
-    int id = 97;
-    Book book = bookService.deleteBook(id);
-    System.out.println(book.getName());
+  public String deleteBook() {
+    int id = 1;
+    bookService.deleteBook(id);
+      return "redirect:/";
   }
 
-  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
-  public ModelAndView issue_request() {
-    return new ModelAndView("issue_book");
-  }
-
-  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
-  public ModelAndView issue(@RequestParam("bookId") int bookId) {
-    DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
+    public String login_request(Map<String, Object> model) {
+        IssueBook issueBook = new IssueBook();
+        model.put("book", issueBook);
+        return "redirect:/";
+    }
+    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
+    public String issue(@RequestParam("bookId") int bookId) {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
     Date date = new Date();
     int employeeId = 0;
     Date returnedDate = null;
-    bookService.issue(bookId, date, returnedDate, employeeId);
-    return new ModelAndView(" issue_book ");
-  }
+    IssueBook issueBook = new IssueBook(bookId, date, returnedDate, employeeId);
+    bookService.issue(issueBook);
+    return "redirect:/";
+
+    }
+
 }

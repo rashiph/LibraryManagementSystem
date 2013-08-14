@@ -124,7 +124,7 @@ public class Book extends BaseEntity {
 
     }
 
-    public Book(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive, int noOfCopies) {
+    public Book(String name, String author, String category, int edition, Float price, Date dateOfPurchase, String vendor, Date createdDate, String createdBy, Date updatedDate, String updatedBy, boolean isActive) {
 
         this.name = name;
         this.author = author;
@@ -138,7 +138,7 @@ public class Book extends BaseEntity {
         this.updatedDate = updatedDate;
         this.updatedBy = updatedBy;
         this.isActive = isActive;
-        this.noOfCopies = noOfCopies;
+
     }
 
     public Book(String name, String author, String category, int edition,int noOfCopies) {

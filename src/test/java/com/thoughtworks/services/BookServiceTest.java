@@ -1,7 +1,7 @@
 package com.thoughtworks.services;
 
 
-import com.thoughtworks.repositories.BookRepository;
+import com.thoughtworks.repositories.BookRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,12 +13,12 @@ public class BookServiceTest {
     BookService bookService;
 
     @Mock
-    BookRepository mockedBookRepository;
+    BookRepositoryImpl mockedBookRepositoryImpl;
 
     @Before
     public void setUp(){
         initMocks(this);
-        bookService = new BookService(mockedBookRepository);
+        bookService = new BookService(mockedBookRepositoryImpl);
     }
 
     @Test

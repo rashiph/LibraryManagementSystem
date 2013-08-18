@@ -2,7 +2,7 @@ package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
-import com.thoughtworks.models.IssueBook;
+import com.thoughtworks.repositories.BookRepository;
 import com.thoughtworks.services.BookService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +29,13 @@ import java.util.Map;
 @Controller
 @SessionAttributes(types = Book.class)
 public class BookController {
-  @Autowired
   BookService bookService;
 
+private BookRepository repository;
 
-  public BookController(BookService bookService) {
-    this.bookService = bookService;
+  @Autowired
+  public BookController(BookRepository repository) {
+    this.repository = repository;
   }
 
   @InitBinder
@@ -45,7 +47,8 @@ public class BookController {
   public String index(Map<String, Object> model) {
 
     Books books = new Books();
-    books.getBookList().addAll(bookService.getAll());
+    Iterable<Book> all = repository.findAll();
+    books.getBookList().addAll((Collection<? extends Book>) all);
     model.put("books", books);
     return "book/index";
   }
@@ -70,15 +73,15 @@ public class BookController {
     if (result.hasErrors()) {
       return "book/add";
     } else {
-      this.bookService.save(book);
+      this.repository.save(book);
       status.setComplete();
       return "redirect:/";
     }
   }
 
   @RequestMapping(value = "/books/{bookId}/edit", method = RequestMethod.GET)
-  public String initUpdateOfBook(@PathVariable("bookId") int bookId, Model model) {
-    Book book = this.bookService.get(bookId);
+  public String initUpdateOfBook(@PathVariable("bookId") Long bookId, Model model) {
+    Book book = this.repository.findOne(bookId);
     model.addAttribute(book);
     return "book/add";
   }
@@ -115,30 +118,38 @@ public class BookController {
     return modelAndView;
   }
 
-
-  @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
-  public String deleteBook() {
-    int id = 1;
-    bookService.deleteBook(id);
-      return "redirect:/";
+  @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
+  public List getAllBook() {
+    return bookService.getAll();
   }
 
-    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
-    public String login_request(Map<String, Object> model) {
-        IssueBook issueBook = new IssueBook();
-        model.put("book", issueBook);
-        return "redirect:/";
-    }
-    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
-    public String issue(@RequestParam("bookId") int bookId) {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
+  @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
+  public void getBook() {
+
+    int searchId = 88;
+    Book book = bookService.get(searchId);
+    System.out.println(book.getName());
+  }
+
+  @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
+  public void deleteBook() {
+    int id = 97;
+    Book book = bookService.deleteBook(id);
+    System.out.println(book.getName());
+  }
+
+  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
+  public ModelAndView issue_request() {
+    return new ModelAndView("issue_book");
+  }
+
+  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
+  public ModelAndView issue(@RequestParam("bookId") int bookId) {
+    DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
     Date date = new Date();
     int employeeId = 0;
     Date returnedDate = null;
-    IssueBook issueBook = new IssueBook(bookId, date, returnedDate, employeeId);
-    bookService.issue(issueBook);
-    return "redirect:/";
-
-    }
-
+    bookService.issue(bookId, date, returnedDate, employeeId);
+    return new ModelAndView(" issue_book ");
+  }
 }

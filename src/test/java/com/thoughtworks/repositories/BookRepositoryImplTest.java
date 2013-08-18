@@ -13,9 +13,9 @@ import java.util.Collection;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class BookRepositoryTest {
+public class BookRepositoryImplTest {
     @Autowired
-    private BookRepository bookRepository;
+    private BookRepositoryImpl bookRepositoryImpl;
 
     @Mock
     Session mockedSession;
@@ -43,6 +43,6 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldGetAllBooks() {
-        Collection<Book> allBooks = bookRepository.getAllBooks();
+        Collection<Book> allBooks = bookRepositoryImpl.getAllBooks();
     }
 }

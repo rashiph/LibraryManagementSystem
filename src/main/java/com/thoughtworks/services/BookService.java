@@ -3,6 +3,7 @@ package com.thoughtworks.services;
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.IssueBook;
 import com.thoughtworks.repositories.BookRepository;
+import com.thoughtworks.repositories.BookRepositoryImpl;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 public class BookService {
   @Autowired
-  BookRepository bookRepository;
+  BookRepositoryImpl bookRepositoryImpl;
 
-  public BookService(BookRepository bookRepository) {
-    this.bookRepository = bookRepository;
+  public BookService(BookRepositoryImpl bookRepositoryImpl) {
+    this.bookRepositoryImpl = bookRepositoryImpl;
   }
 
   public List getAll(){
@@ -39,6 +40,25 @@ public class BookService {
 
   public void save(Book book){
     bookRepository.save(book);
+  public List getAll() {
+    return bookRepositoryImpl.getAllBooks();
+  }
+
+  public Book get(int searchId) {
+    return bookRepositoryImpl.getOneBook(searchId);
+  }
+
+  public Book deleteBook(int id) {
+    return bookRepositoryImpl.delete(id);
+  }
+
+  public void issue(int bookId, Date issueDate, Date returnedDate, int employeeId) {
+    bookRepositoryImpl.issueBook(bookId, issueDate, returnedDate, employeeId);
+  }
+
+
+  public void save(Book book) {
+    bookRepositoryImpl.save(book);
   }
 }
 

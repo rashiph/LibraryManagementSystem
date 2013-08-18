@@ -23,7 +23,7 @@
 			<jsp:useBean id="books" scope="request" type="com.thoughtworks.models.Books"/>
 
 			<datatables:table id="books" data="${books.bookList}" cdn="true" row="book" theme="bootstrap2"
-												cssClass="table table-striped" paginate="false" info="false">
+												cssClass="table table-striped" paginate="true" info="false">
 				<datatables:column title="Name">
 					<c:out value="${book.name}"/>
 				</datatables:column>

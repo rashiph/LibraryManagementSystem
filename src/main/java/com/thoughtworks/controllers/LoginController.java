@@ -1,9 +1,10 @@
 package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Admin;
-import com.thoughtworks.services.LoginService;
+import com.thoughtworks.repositories.LoginRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +19,11 @@ import java.util.Map;
 @SessionAttributes(types = Admin.class)
 public class LoginController {
 
-  @Autowired
-  LoginService service;
+ private LoginRepository repository;
 
-  public LoginController(LoginService service) {
-    this.service = service;
+  @Autowired
+  public LoginController( LoginRepository repository) {
+    this.repository = repository;
   }
 
   @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -33,8 +34,8 @@ public class LoginController {
   }
 
   @RequestMapping(value = "/login", method = RequestMethod.POST)
-  public String login(@RequestParam("employeeId") int employeeId, HttpServletRequest request) {
-    boolean isAdmin = (service.login(employeeId));
+  public String login(@RequestParam("employeeId") Long employeeId, HttpServletRequest request) {
+    boolean isAdmin = repository.findOne(employeeId) != null;
     request.getSession().setAttribute("isAdmin", isAdmin);
     return "redirect:/";
   }

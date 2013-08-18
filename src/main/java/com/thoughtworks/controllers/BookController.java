@@ -3,7 +3,6 @@ package com.thoughtworks.controllers;
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
 import com.thoughtworks.repositories.BookRepository;
-import com.thoughtworks.services.BookService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 
@@ -29,7 +27,6 @@ import java.util.Map;
 @Controller
 @SessionAttributes(types = Book.class)
 public class BookController {
-  BookService bookService;
 
 private BookRepository repository;
 
@@ -91,7 +88,7 @@ private BookRepository repository;
     if (result.hasErrors()) {
       return "book/add";
     } else {
-      this.bookService.save(book);
+      this.repository.save(book);
       status.setComplete();
       return "redirect:/";
     }
@@ -119,23 +116,22 @@ private BookRepository repository;
   }
 
   @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
-  public List getAllBook() {
-    return bookService.getAll();
+  public Iterable<Book> getAllBook() {
+    return repository.findAll();
   }
 
   @RequestMapping(value = "/edit", method = RequestMethod.GET, headers = "Accept=application/json")
   public void getBook() {
 
-    int searchId = 88;
-    Book book = bookService.get(searchId);
+    Long searchId = 88l;
+    Book book = repository.findOne(searchId);
     System.out.println(book.getName());
   }
 
   @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
   public void deleteBook() {
-    int id = 97;
-    Book book = bookService.deleteBook(id);
-    System.out.println(book.getName());
+    Long id = 97l;
+    repository.delete(id);
   }
 
   @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
@@ -149,7 +145,7 @@ private BookRepository repository;
     Date date = new Date();
     int employeeId = 0;
     Date returnedDate = null;
-    bookService.issue(bookId, date, returnedDate, employeeId);
+//    bookService.issue(bookId, date, returnedDate, employeeId);
     return new ModelAndView(" issue_book ");
   }
 }

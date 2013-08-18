@@ -1,14 +1,12 @@
 package com.thoughtworks.controllers;
 
-import com.thoughtworks.services.BookService;
 import org.junit.Test;
-import org.mockito.Mock;
 
 public class BookControllerTest {
 
     BookController bookController;
-    @Mock
-    BookService mockedBookService;
+//    @Mock
+//    BookService mockedBookService;
 
 //    @Before
 //    public void setUp(){

@@ -10,6 +10,15 @@
 
 <jsp:include page="../partials/headTag.jsp"/>
 
+<script>
+function issue()
+{
+var employeeId =  prompt("Please enter Employee Id","employeeId");
+document.getElementById(id).value = employeeId;
+}
+</script>
+
+
 <body>
 <jsp:include page="../partials/bodyHeader.jsp"/>
 
@@ -43,7 +52,7 @@
 					<spring:url value="books/{bookId}/issue" var="issueBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
-					<a href="${fn:escapeXml(issueBookUrl)}">Issue</a>
+					<a href="${fn:escapeXml(issueBookUrl)}", onclick = "issue()">Issue</a>
 				</datatables:column>
 				<datatables:column visible="${sessionScope.isAdmin}" title="Admin Action" sortable="false">
 					<spring:url value="books/{bookId}/edit" var="editBookUrl">

@@ -2,7 +2,9 @@ package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.Books;
+import com.thoughtworks.models.IssueBook;
 import com.thoughtworks.repositories.BookRepository;
+import com.thoughtworks.repositories.IssueBookRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,7 @@ import java.util.Map;
 public class BookController {
 
 private BookRepository repository;
+private IssueBookRepository issueBookRepository;
 
   @Autowired
   public BookController(BookRepository repository) {
@@ -128,24 +131,33 @@ private BookRepository repository;
     System.out.println(book.getName());
   }
 
-  @RequestMapping(value = "/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
+
+    @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET)
+    public String initDeleteOfBook(@PathVariable("bookId") Long bookId, Model model) {
+       model.addAttribute(bookId);
+        return "book/add";
+    }
+  @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.PUT, headers = "Accept=application/json")
   public void deleteBook() {
-    Long id = 97l;
-    repository.delete(id);
+      boolean isActive = false;
+      Book book = new Book();
+    repository.save(book);
   }
 
-  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
-  public ModelAndView issue_request() {
-    return new ModelAndView("issue_book");
-  }
+    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
+    public String initCreationOfIssueBook(@PathVariable("bookId") int bookId,Map<String, Object> model) {
+     Date date = new Date();
+     Date returnedDate = null;
+     int employeeId = 0;
+     IssueBook issueBook = new IssueBook(bookId, date, returnedDate, employeeId);
+     model.put("issueBook", issueBook);
+     return "redirect:/";
+    }
 
-  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
-  public ModelAndView issue(@RequestParam("bookId") int bookId) {
-    DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-    Date date = new Date();
-    int employeeId = 0;
-    Date returnedDate = null;
-//    bookService.issue(bookId, date, returnedDate, employeeId);
-    return new ModelAndView(" issue_book ");
-  }
+    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
+    public String processCreationOfIssueBook(@ModelAttribute("issuebook") @Valid IssueBook issueBook, SessionStatus status) {
+    issueBookRepository.save(issueBook);
+    status.setComplete();
+    return "redirect:/";
+    }
 }

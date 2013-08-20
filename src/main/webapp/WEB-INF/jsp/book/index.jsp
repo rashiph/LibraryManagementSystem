@@ -49,7 +49,7 @@ document.getElementById(id).value = employeeId;
 					<c:out value="${book.noOfCopies}"/>
 				</datatables:column>
 				<datatables:column title="Action" sortable="false" searchable="false">
-					<spring:url value="books/{bookId}/issue" var="issueBookUrl">
+					<spring:url value="books/{bookId}/{employeeId}/issue" var="issueBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(issueBookUrl)}", onclick = "issue()">Issue</a>
@@ -58,8 +58,8 @@ document.getElementById(id).value = employeeId;
 					<spring:url value="books/{bookId}/edit" var="editBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
-					<a href="${fn:escapeXml(editBookUrl)}">Update</a> |
-					<spring:url value="books/{bookId}/delete" var="deleteBookUrl">
+					<a href="${fn:escapeXml(editBookUrl)}">Update</a>
+					<spring:url value="/books/{bookId}/deleteBook" var="deleteBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(deleteBookUrl)}">Delete</a>

@@ -108,8 +108,11 @@ public class Book extends BaseEntity {
   public boolean getIsActive() {
     return isActive;
   }
+    public void setIsActive(boolean isActive) {
+        this.isActive= isActive;
+    }
 
-  //
+    //
   private int noOfCopies;
 
   public int getNoOfCopies() {

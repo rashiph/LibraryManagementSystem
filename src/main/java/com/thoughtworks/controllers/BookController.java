@@ -132,32 +132,32 @@ private IssueBookRepository issueBookRepository;
   }
 
 
-    @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET)
-    public String initDeleteOfBook(@PathVariable("bookId") Long bookId, Model model) {
-       model.addAttribute(bookId);
-        return "book/add";
-    }
-  @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.PUT, headers = "Accept=application/json")
-  public void deleteBook() {
+  @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
+  public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status) {
       boolean isActive = false;
-      Book book = new Book();
-    repository.save(book);
+      Book book = repository.findOne(bookId);
+      book.setIsActive(false);
+      this.repository.save(book);
+      status.setComplete();
+      return "redirect:/";
   }
 
-    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
-    public String initCreationOfIssueBook(@PathVariable("bookId") int bookId,Map<String, Object> model) {
+    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
+    public String initCreationOfIssueBook(@PathVariable("bookId") int bookId,Map<String, Object> model,SessionStatus status) {
      Date date = new Date();
      Date returnedDate = null;
      int employeeId = 0;
      IssueBook issueBook = new IssueBook(bookId, date, returnedDate, employeeId);
      model.put("issueBook", issueBook);
+        issueBookRepository.save(issueBook);
+        status.setComplete();
      return "redirect:/";
     }
 
-    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
-    public String processCreationOfIssueBook(@ModelAttribute("issuebook") @Valid IssueBook issueBook, SessionStatus status) {
-    issueBookRepository.save(issueBook);
-    status.setComplete();
-    return "redirect:/";
-    }
+//    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
+//    public String processCreationOfIssueBook(@ModelAttribute("issuebook") @Valid IssueBook issueBook, SessionStatus status) {
+//    issueBookRepository.save(issueBook);
+//    status.setComplete();
+//    return "redirect:/";
+//    }
 }

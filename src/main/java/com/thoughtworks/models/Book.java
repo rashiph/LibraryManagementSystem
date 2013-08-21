@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +39,11 @@ public class Book extends BaseEntity {
   @Column(name = "vendor")
   private String vendor;
 
+  @NotNull
   @Column(name = "createdDate")
   private Date createdDate;
 
+  @NotNull
   @Column(name = "createdBy")
   private String createdBy;
 
@@ -50,9 +53,11 @@ public class Book extends BaseEntity {
   @Column(name = "updatedBy")
   private String updatedBy;
 
+  @NotNull
   @Column(name = "isActive")
   private boolean isActive;
 
+  @NotNull
   @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE }, mappedBy = "book")
   @Column(nullable = false)
   @LazyCollection(LazyCollectionOption.FALSE)

@@ -30,8 +30,8 @@ import java.util.Map;
 @SessionAttributes(types = Book.class)
 public class BookController {
 
-private BookRepository repository;
-private IssueBookRepository issueBookRepository;
+  private BookRepository repository;
+  private IssueBookRepository issueBookRepository;
 
   @Autowired
   public BookController(BookRepository repository) {
@@ -69,7 +69,10 @@ private IssueBookRepository issueBookRepository;
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.POST)
-  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result, SessionStatus status) {
+  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result, SessionStatus status, HttpServletRequest request) {
+    Integer copies = Integer.valueOf(request.getParameter("noOfCopies"));
+    Date dateOfPurchase = new Date( (request.getParameter("dateOfPurchase")));
+
     if (result.hasErrors()) {
       return "book/add";
     } else {
@@ -134,25 +137,25 @@ private IssueBookRepository issueBookRepository;
 
   @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
   public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status) {
-      boolean isActive = false;
-      Book book = repository.findOne(bookId);
-      book.setActive(false);
-      this.repository.save(book);
-      status.setComplete();
-      return "redirect:/";
+    boolean isActive = false;
+    Book book = repository.findOne(bookId);
+    book.setActive(false);
+    this.repository.save(book);
+    status.setComplete();
+    return "redirect:/";
   }
 
-    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
-    public String initCreationOfIssueBook(@PathVariable("bookId") int bookId,Map<String, Object> model,SessionStatus status) {
-     Date date = new Date();
-     Date returnedDate = null;
-     int employeeId = 0;
-     IssueBook issueBook = new IssueBook(bookId, date, returnedDate, employeeId);
-     model.put("issueBook", issueBook);
-        issueBookRepository.save(issueBook);
-        status.setComplete();
-     return "redirect:/";
-    }
+  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
+  public String initCreationOfIssueBook(@PathVariable("bookId") int bookId, Map<String, Object> model, SessionStatus status) {
+    Date date = new Date();
+    Date returnedDate = null;
+    int employeeId = 0;
+    IssueBook issueBook = new IssueBook(bookId, date, returnedDate, employeeId);
+    model.put("issueBook", issueBook);
+    issueBookRepository.save(issueBook);
+    status.setComplete();
+    return "redirect:/";
+  }
 
 //    @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.POST)
 //    public String processCreationOfIssueBook(@ModelAttribute("issuebook") @Valid IssueBook issueBook, SessionStatus status) {

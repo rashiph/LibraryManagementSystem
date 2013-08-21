@@ -51,7 +51,8 @@
 							<controls:inputField label="Category" name="category"/>
 							<controls:inputField label="Edition" name="edition"/>
 							<controls:inputField label="Price" name="price"/>
-							<controls:inputField label="Date Of Purchase" name="dateOfPurchase"/>
+							<controls:inputFieldWIthoutinding name="dateOfPurchase" label="Date Of Purchase" id="dateOfPurchase" type="text" />
+							<controls:inputFieldWIthoutinding name="noOfCopies" label="No. of copies"  />
 							<controls:inputField label="Vendor" name="vendor"/>
 							<div>
 								<c:choose>

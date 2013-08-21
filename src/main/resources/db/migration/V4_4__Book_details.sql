@@ -1,6 +1,7 @@
 CREATE  TABLE book_details (
-  id INT(11) NOT NULL ,
-  book_id INT(11) NOT NULL ,
+   id bigint(20) NOT NULL AUTO_INCREMENT,
+  book_id bigint(20) NOT NULL ,
   dateOfPurchase DATE NOT NULL ,
   IsActive BIT NOT NULL ,
-  PRIMARY KEY (id) )
+  PRIMARY KEY (id)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -1,6 +1,7 @@
 package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Book;
+import com.thoughtworks.models.BookDetail;
 import com.thoughtworks.models.Books;
 import com.thoughtworks.models.IssueBook;
 import com.thoughtworks.repositories.BookRepository;
@@ -20,9 +21,7 @@ import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 
 @NoArgsConstructor
@@ -70,12 +69,25 @@ public class BookController {
 
   @RequestMapping(value = "/new", method = RequestMethod.POST)
   public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result, SessionStatus status, HttpServletRequest request) {
-    Integer copies = Integer.valueOf(request.getParameter("noOfCopies"));
-    Date dateOfPurchase = new Date( (request.getParameter("dateOfPurchase")));
+    Integer noOfCopies = Integer.valueOf(request.getParameter("noOfCopies"));
+    Date dateOfPurchase = new Date((request.getParameter("dateOfPurchase")));
 
     if (result.hasErrors()) {
       return "book/add";
     } else {
+      if (noOfCopies > 0) {
+        BookDetail bookDetail;
+        List<BookDetail> bookDetails = new ArrayList<BookDetail>();
+        for (int i = 0; i < noOfCopies; i++) {
+          bookDetail = new BookDetail();
+          bookDetail.setDateOfPurchase(dateOfPurchase);
+          bookDetail.setActive(true);
+          bookDetail.setBook(book);
+          bookDetails.add(bookDetail);
+        }
+        book.setBookDetails(bookDetails);
+      }
+
       this.repository.save(book);
       status.setComplete();
       return "redirect:/";

@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS books(
-   id INTEGER SERIAL DEFAULT VALUE UNIQUE NOT NULL,
+   id bigint(20) NOT NULL AUTO_INCREMENT,
    name VARCHAR(50),
    author VARCHAR(50),
    category VARCHAR(50),
@@ -10,5 +10,6 @@ CREATE TABLE IF NOT EXISTS books(
    createdBy VARCHAR(50),
    updatedDate DATE,
    updatedBy VARCHAR(50),
-   isActive BOOLEAN
-);
+   isActive BIT,
+   PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8

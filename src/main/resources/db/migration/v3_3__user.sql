@@ -1,8 +1,9 @@
 CREATE TABLE IF NOT EXISTS users(
-id INTEGER SERIAL DEFAULT VALUE NOT NULL ,
-employeeId INTEGER(50),
+employeeId bigint(20) NOT NULL ,
 userName VARCHAR(50),
 password VARCHAR(10),
 isAdmin Boolean,
-isActive Boolean
+isActive Boolean,
+PRIMARY KEY(employeeId)
+
 );

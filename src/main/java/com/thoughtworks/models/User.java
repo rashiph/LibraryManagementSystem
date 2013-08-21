@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -14,11 +15,12 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User {
 
+  @Id
   @NotNull
   @Column(name = "employeeId", unique = true)
-  private int employeeId;
+  private long employeeId;
 
   @NotEmpty
   @Column(name = "userName")

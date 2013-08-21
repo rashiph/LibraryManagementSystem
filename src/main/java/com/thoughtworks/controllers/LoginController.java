@@ -2,7 +2,6 @@ package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.User;
 import com.thoughtworks.repositories.UserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
-@NoArgsConstructor
 @Controller
 @SessionAttributes(types = User.class)
 public class LoginController {
@@ -20,22 +18,26 @@ public class LoginController {
   @Autowired
   private UserRepository repository;
 
-//  @Autowired
-//  public LoginController( UserRepository repository) {
-//    this.repository = repository;
-//  }
 
-  @RequestMapping(value = "/login", method = RequestMethod.GET)
+  @RequestMapping(value = "/", method = RequestMethod.GET)
   public String login_request(Map<String, Object> model) {
     User login = new User();
     model.put("login", login);
-    return "user/login";
+    return "user/index";
   }
 
-  @RequestMapping(value = "/login", method = RequestMethod.POST)
-  public String login(@RequestParam("employeeId") Long employeeId, HttpServletRequest request) {
-    boolean isAdmin = repository.findOne(employeeId) != null;
-    request.getSession().setAttribute("isAdmin", isAdmin);
+  @RequestMapping(value = "/", method = RequestMethod.POST)
+  public String login(@RequestParam("employeeId") Long employeeId, @RequestParam("password") String password, HttpServletRequest request) {
+    User user = repository.findOne(employeeId);
+    if(user != null && user.getPassword().equals(password)){
+    request.getSession().setAttribute("isAdmin", user.isAdmin());
+    request.getSession().setAttribute("employeeId", employeeId);
+    request.getSession().setAttribute("fullName", user.getUserName());
+    request.getSession().setAttribute("isLogin", true);
+    return "redirect:book/index";
+    }
+    request.getSession().setAttribute("isAdmin", user.isAdmin());
+    request.getSession().setAttribute("isLogin", false);
     return "redirect:/";
   }
 

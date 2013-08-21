@@ -25,10 +25,8 @@ import java.util.*;
 @Controller
 @SessionAttributes(types = Book.class)
 public class BookController {
-
   @Autowired
   private BookRepository repository;
-
   @Autowired
   private IssuedBookRepository issuedBookRepository;
 
@@ -37,7 +35,7 @@ public class BookController {
     dataBinder.setDisallowedFields("id");
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @RequestMapping(value = "/book/index", method = RequestMethod.GET)
   public String index(Map<String, Object> model) {
     Books books = new Books();
     Iterable<Book> all = repository.findAll();

@@ -29,6 +29,7 @@
 
 						<form:form modelAttribute="login" method="POST" class="form-horizontal form-signin-signup" id="login-form">
 							<controls:inputField label="employee Id" name="employeeId"/>
+							<controls:inputField label="Password" name="password" type="password"/>
 							<div>
 								<button type="submit" class="btn btn-primary btn-large">Login</button>
 							</div>

@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS books(
    category VARCHAR(50),
    edition INTEGER(50),
    price FLOAT(10),
-   dateOfPurchase DATE,
    vendor VARCHAR(50),
    createdDate DATE,
    createdBy VARCHAR(50),

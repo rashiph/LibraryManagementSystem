@@ -136,7 +136,7 @@ private IssueBookRepository issueBookRepository;
   public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status) {
       boolean isActive = false;
       Book book = repository.findOne(bookId);
-      book.setIsActive(false);
+      book.setActive(false);
       this.repository.save(book);
       status.setComplete();
       return "redirect:/";

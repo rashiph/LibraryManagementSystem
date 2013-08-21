@@ -11,11 +11,10 @@
 <jsp:include page="../partials/headTag.jsp"/>
 
 <script>
-function issue()
-{
-var employeeId =  prompt("Please enter Employee Id","employeeId");
-document.getElementById(id).value = employeeId;
-}
+	function issue() {
+		var employeeId = prompt("Please enter Employee Id", "employeeId");
+		document.getElementById(id).value = employeeId;
+	}
 </script>
 
 
@@ -46,7 +45,7 @@ document.getElementById(id).value = employeeId;
 					<c:out value="${book.edition}"/>
 				</datatables:column>
 				<datatables:column title="Total no. of copies">
-					<c:out value="${book.noOfCopies}"/>
+					<c:out value="${fn:length(book.bookDetails)}"/>
 				</datatables:column>
 				<datatables:column title="Action" sortable="false" searchable="false">
 					<spring:url value="books/{bookId}/{employeeId}/issue" var="issueBookUrl">
@@ -63,8 +62,6 @@ document.getElementById(id).value = employeeId;
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(deleteBookUrl)}">Delete</a>
-
-
 				</datatables:column>
 			</datatables:table>
 		</div>

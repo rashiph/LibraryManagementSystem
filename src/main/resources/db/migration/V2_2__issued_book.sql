@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS issued_books(
   employeeId INTEGER NOT NULL,
   issueDate DATE,
   returnedDate DATE,
-  isActive BIT,
+  isActive BOOLEAN,
   PRIMARY KEY (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -4,22 +4,22 @@ import com.thoughtworks.models.Book;
 import com.thoughtworks.models.BookDetail;
 import com.thoughtworks.models.Books;
 import com.thoughtworks.models.IssuedBook;
+import com.thoughtworks.repositories.BookDetailRepository;
 import com.thoughtworks.repositories.BookRepository;
 import com.thoughtworks.repositories.IssuedBookRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
-
 
 @NoArgsConstructor
 @Controller
@@ -27,8 +27,12 @@ import java.util.*;
 public class BookController {
   @Autowired
   private BookRepository repository;
+
   @Autowired
   private IssuedBookRepository issuedBookRepository;
+
+  @Autowired
+  private BookDetailRepository bookDetailRepository;
 
   @InitBinder
   public void setAllowedFields(WebDataBinder dataBinder) {
@@ -55,7 +59,7 @@ public class BookController {
         return "book/add";
       }
     }
-    return "redirect:/";
+    return "book/index";
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.POST)
@@ -71,6 +75,46 @@ public class BookController {
         List<BookDetail> bookDetails = new ArrayList<BookDetail>();
         for (int i = 0; i < noOfCopies; i++) {
           bookDetail = new BookDetail();
+
+          bookDetail.setDateOfPurchase(dateOfPurchase);
+          bookDetail.setActive(true);
+          bookDetail.setBook(book);
+          bookDetails.add(bookDetail);
+        }
+
+        book.setBookDetails(bookDetails);
+      }
+
+      this.repository.save(book);
+      status.setComplete();
+      return "book/index";
+    }
+  }
+
+  @RequestMapping(value = "/{bookId}/edit", method = RequestMethod.GET)
+  public String initUpdateOfBook(@Valid @PathVariable("bookId") Long bookId, Model model) {
+    Book book = this.repository.findOne(bookId);
+    model.addAttribute(book);
+    return "book/add";
+  }
+
+  @RequestMapping(value = "/{bookId}/edit", method = RequestMethod.PUT)
+  public String processUpdateOfBook(@Valid Book book, BindingResult result, SessionStatus status, HttpServletRequest request) {
+    Integer noOfCopies = Integer.valueOf(request.getParameter("noOfCopies"));
+    Date dateOfPurchase = new Date((request.getParameter("dateOfPurchase")));
+
+    if (result.hasErrors()) {
+      return "book/add";
+    } else {
+      if (noOfCopies > 0) {
+        if (book.getBookDetails().size() > 0) {
+          bookDetailRepository.delete(book.getBookDetails());
+        }
+        BookDetail bookDetail;
+        List<BookDetail> bookDetails = new ArrayList<BookDetail>();
+        for (int i = 0; i < noOfCopies; i++) {
+          bookDetail = new BookDetail();
+
           bookDetail.setDateOfPurchase(dateOfPurchase);
           bookDetail.setActive(true);
           bookDetail.setBook(book);
@@ -78,28 +122,9 @@ public class BookController {
         }
         book.setBookDetails(bookDetails);
       }
-
       this.repository.save(book);
       status.setComplete();
-      return "redirect:/";
-    }
-  }
-
-  @RequestMapping(value = "/books/{bookId}/edit", method = RequestMethod.GET)
-  public String initUpdateOfBook(@Valid @PathVariable("bookId") Long bookId, Model model) {
-    Book book = this.repository.findOne(bookId);
-    model.addAttribute(book);
-    return "book/add";
-  }
-
-  @RequestMapping(value = "/books/{bookId}/edit", method = RequestMethod.PUT)
-  public String processUpdateOfBook(@Valid Book book, BindingResult result, SessionStatus status) {
-    if (result.hasErrors()) {
-      return "book/add";
-    } else {
-      this.repository.save(book);
-      status.setComplete();
-      return "redirect:/";
+      return "book/index";
     }
   }
 
@@ -114,17 +139,17 @@ public class BookController {
   }
 
   @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
-  public String issueBook(@Valid @PathVariable("bookId") int bookId, SessionStatus status, HttpServletRequest request) {
+  public String issueBook(@Valid @PathVariable("bookId") int bookId, SessionStatus status, HttpServletRequest request, ModelMap model) {
     Object attribute = request.getSession().getAttribute("employeeId");
-    ModelAndView modelAndView = new ModelAndView();
     if (attribute != null) {
       IssuedBook book = new IssuedBook();
       book.setBookId(bookId);
       book.setEmployeeId((Integer) attribute);
       book.setActive(true);
       issuedBookRepository.save(book);
-      return "redirect:/";
+      model.addAttribute("message", "yahoo");
+      return "book/index";
     }
-    return "redirect:/";
+    return "book/index";
   }
 }

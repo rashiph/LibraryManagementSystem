@@ -17,6 +17,7 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>List Of Books</h1>
+      ${message}
 		</div>
 		<div class="row-fluid">
 			<jsp:useBean id="books" scope="request" type="com.thoughtworks.models.Books"/>
@@ -45,7 +46,7 @@
 					<a href="${fn:escapeXml(issueBookUrl)}">Issue</a>
 				</datatables:column>
 				<datatables:column visible="${sessionScope.isAdmin}" title="Admin Action" sortable="false">
-					<spring:url value="books/{bookId}/edit" var="editBookUrl">
+					<spring:url value="/{bookId}/edit" var="editBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(editBookUrl)}">Update</a>

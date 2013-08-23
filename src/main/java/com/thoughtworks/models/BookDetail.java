@@ -22,7 +22,7 @@ public class BookDetail extends BaseEntity {
   private Date dateOfPurchase;
 
   @NotNull
-  @Column(name = "isActive")
+  @Column(name = "IsActive")
   private boolean isActive;
 
 }

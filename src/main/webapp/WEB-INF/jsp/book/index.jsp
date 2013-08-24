@@ -10,6 +10,22 @@
 
 <jsp:include page="../partials/headTag.jsp"/>
 
+<script  type="text/javascript">
+ function Delete(bookId)
+ {
+     var httpReq = new XMLHttpRequest();
+     deleteBookUrl = "/books/"+bookId+"/deleteBook";
+     httpReq.open("GET",deleteBookUrl,true);
+     httpReq.send();
+    httpReq.onload = function() {
+    	if(httpReq.readyState == 4 && httpReq.status == 200) {
+    		alert("book has deleted");
+    	}
+    }
+ }
+ </script>
+
+
 <body>
 <jsp:include page="../partials/bodyHeader.jsp"/>
 
@@ -17,9 +33,10 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>List Of Books</h1>
-      ${message}
+
 		</div>
 		<div class="row-fluid">
+
 			<jsp:useBean id="books" scope="request" type="com.thoughtworks.models.Books"/>
 
 			<datatables:table id="books" data="${books.bookList}" cdn="true" row="book" theme="bootstrap2"
@@ -50,14 +67,15 @@
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(editBookUrl)}">Update</a>
-					<spring:url value="/books/{bookId}/deleteBook" var="deleteBookUrl">
-						<spring:param name="bookId" value="${book.id}"/>
-					</spring:url>
-					<a href="${fn:escapeXml(deleteBookUrl)}">Delete</a>
+				    <spring:url value="/books/{bookId}/deleteBook" var="deleteBookUrl">
+                  	     <spring:param name="bookId" value="${book.id}"/>
+           			</spring:url>
+                    <a href="javascript:Delete(${book.id})">Delete</a>
 				</datatables:column>
 			</datatables:table>
 		</div>
 	</div>
+	>
 </div>
 
 <jsp:include page="../partials/footer.jsp"/>

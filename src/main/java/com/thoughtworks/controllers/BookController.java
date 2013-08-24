@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -128,14 +129,22 @@ public class BookController {
     }
   }
 
+
+
   @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
-  public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status) {
-    boolean isActive = false;
+  public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status, HttpServletResponse response, HttpServletRequest request, Map<String, Object> model) {
     Book book = repository.findOne(bookId);
     book.setActive(false);
     this.repository.save(book);
     status.setComplete();
-    return "redirect:/";
+    response.setStatus(200);
+//
+//      Iterable<BookDetail> bookDetail = bookDetailRepository.findAll();
+//      List<BookDetail> bookDetails = new ArrayList<BookDetail>();
+//      bookDetails.addAll((Collection<? extends BookDetail>)bookDetail);
+//      model.put("bookDetails", bookDetails);
+//      return "book/index";
+      return  "redirect:/";
   }
 
   @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)

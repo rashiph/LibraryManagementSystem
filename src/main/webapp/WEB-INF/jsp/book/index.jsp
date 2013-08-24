@@ -10,20 +10,19 @@
 
 <jsp:include page="../partials/headTag.jsp"/>
 
-<script  type="text/javascript">
- function Delete(bookId)
- {
-     var httpReq = new XMLHttpRequest();
-     deleteBookUrl = "/books/"+bookId+"/deleteBook";
-     httpReq.open("GET",deleteBookUrl,true);
-     httpReq.send();
-    httpReq.onload = function() {
-    	if(httpReq.readyState == 4 && httpReq.status == 200) {
-    		alert("book has deleted");
-    	}
-    }
- }
- </script>
+<script type="text/javascript">
+	function Delete(bookId) {
+		var httpReq = new XMLHttpRequest();
+		deleteBookUrl = "/books/" + bookId + "/deleteBook";
+		httpReq.open("GET", deleteBookUrl, true);
+		httpReq.send();
+		httpReq.onload = function () {
+			if (httpReq.readyState == 4 && httpReq.status == 200) {
+				alert("book has deleted");
+			}
+		}
+	}
+</script>
 
 
 <body>
@@ -41,41 +40,59 @@
 
 			<datatables:table id="books" data="${books.bookList}" cdn="true" row="book" theme="bootstrap2"
 												cssClass="table table-striped" paginate="true" info="false">
+
 				<datatables:column title="Name">
 					<c:out value="${book.name}"/>
 				</datatables:column>
+
 				<datatables:column title="Author">
 					<c:out value="${book.author}"/>
 				</datatables:column>
+
 				<datatables:column title="Category">
 					<c:out value="${book.category}"/>
 				</datatables:column>
+
 				<datatables:column title="Edition">
 					<c:out value="${book.edition}"/>
 				</datatables:column>
+
 				<datatables:column title="Total no. of copies">
 					<c:out value="${fn:length(book.bookDetails)}"/>
 				</datatables:column>
-				<datatables:column title="Action" sortable="false" searchable="false">
-					<spring:url value="books/{bookId}/issue" var="issueBookUrl">
-						<spring:param name="bookId" value="${book.id}"/>
-					</spring:url>
-					<a href="${fn:escapeXml(issueBookUrl)}">Issue</a>
+
+				<datatables:column title="Available no. of copies">
+					<c:out value="${book.availableCopies}"/>
 				</datatables:column>
+
+				<datatables:column title="Action" sortable="false" searchable="false">
+					<c:choose>
+						<c:when test="${book.availableCopies > 0}">
+							<spring:url value="books/{bookId}/issue" var="issueBookUrl">
+								<spring:param name="bookId" value="${book.id}"/>
+							</spring:url>
+							<a href="${fn:escapeXml(issueBookUrl)}">Issue</a>
+						</c:when>
+						<c:otherwise>
+							<div id="borrower">Borrower</div>
+						</c:otherwise>
+					</c:choose>
+				</datatables:column>
+
 				<datatables:column visible="${sessionScope.isAdmin}" title="Admin Action" sortable="false">
 					<spring:url value="/{bookId}/edit" var="editBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
 					<a href="${fn:escapeXml(editBookUrl)}">Update</a>
-				    <spring:url value="/books/{bookId}/deleteBook" var="deleteBookUrl">
-                  	     <spring:param name="bookId" value="${book.id}"/>
-           			</spring:url>
-                    <a href="javascript:Delete(${book.id})">Delete</a>
+					<spring:url value="/books/{bookId}/deleteBook" var="deleteBookUrl">
+						<spring:param name="bookId" value="${book.id}"/>
+					</spring:url>
+					<a href="javascript:Delete(${book.id})">Delete</a>
 				</datatables:column>
+
 			</datatables:table>
 		</div>
 	</div>
-	>
 </div>
 
 <jsp:include page="../partials/footer.jsp"/>

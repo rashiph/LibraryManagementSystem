@@ -31,7 +31,7 @@
               </a>
             </li>
             <li>
-              <a href="<spring:url value="/new" htmlEscape="true" />">
+              <a href="<spring:url value="/book/return" htmlEscape="true" />">
                 <i class="icon-th-list"></i>
                 Return Books
               </a>

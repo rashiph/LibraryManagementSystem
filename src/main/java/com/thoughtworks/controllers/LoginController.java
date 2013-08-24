@@ -65,7 +65,7 @@ public class LoginController {
 
     request.getSession().setAttribute("isLogin", Boolean.TRUE);
     request.getSession().setAttribute("isAdmin", Boolean.FALSE);
-    return "redirect:/";
+    return "book/index";
 
   }
 }

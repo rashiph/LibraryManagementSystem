@@ -17,14 +17,13 @@ import java.util.Date;
 public class IssuedBook extends BaseEntity {
 
   @NotNull
-  @Column(name = "book_Id")
+  @Column(name = "bookId")
   private long bookId;
 
   @NotNull
   @Column(name = "issueDate")
   private Date issueDate;
 
-  @NotNull
   @Column(name = "returnedDate")
   private Date returnedDate;
 

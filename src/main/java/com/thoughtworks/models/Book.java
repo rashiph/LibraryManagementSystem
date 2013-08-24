@@ -53,11 +53,12 @@ public class Book extends BaseEntity {
   @Column(name = "isActive")
   private boolean isActive;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE }, mappedBy = "book")
+  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "book")
   @Column(nullable = false)
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<BookDetail> bookDetails;
 
+  private transient int availableCopies;
 }
 
 

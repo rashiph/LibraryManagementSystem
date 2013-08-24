@@ -44,7 +44,10 @@ public class BookController {
   public String index(Map<String, Object> model) {
     Books books = new Books();
     Iterable<Book> all = repository.findAll();
-    books.getBookList().addAll((Collection<? extends Book>) all);
+    for (Book book : all) {
+      book.setAvailableCopies(book.getBookDetails().size() - issuedBookRepository.findNumberOfBooksById(book.getId()).size());
+    }
+    books.setBookList((List<Book>) all);
     model.put("books", books);
     return "book/index";
   }
@@ -82,10 +85,8 @@ public class BookController {
           bookDetail.setBook(book);
           bookDetails.add(bookDetail);
         }
-
         book.setBookDetails(bookDetails);
       }
-
       this.repository.save(book);
       status.setComplete();
       return "book/index";
@@ -129,8 +130,6 @@ public class BookController {
     }
   }
 
-
-
   @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
   public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status, HttpServletResponse response, HttpServletRequest request, Map<String, Object> model) {
     Book book = repository.findOne(bookId);
@@ -144,7 +143,7 @@ public class BookController {
 //      bookDetails.addAll((Collection<? extends BookDetail>)bookDetail);
 //      model.put("bookDetails", bookDetails);
 //      return "book/index";
-      return  "redirect:/";
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)

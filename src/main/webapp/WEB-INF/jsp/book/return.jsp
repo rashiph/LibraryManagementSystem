@@ -56,10 +56,10 @@
 					<c:out value="${book.issueDate}"/>
 				</datatables:column>
 				<datatables:column title="Action" sortable="false" searchable="false">
-					<spring:url value="/{bookId}/issue" var="issueBookUrl">
+					<spring:url value="/{bookId}/return" var="returnBookUrl">
 						<spring:param name="bookId" value="${book.id}"/>
 					</spring:url>
-					<a href="${fn:escapeXml(issueBookUrl)}">Return</a>
+					<a href="${fn:escapeXml(returnBookUrl)}">Return</a>
 				</datatables:column>
 			</datatables:table>
 		</div>

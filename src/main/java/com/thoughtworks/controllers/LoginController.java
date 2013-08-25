@@ -3,6 +3,7 @@ package com.thoughtworks.controllers;
 import com.thoughtworks.models.User;
 import com.thoughtworks.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.Map;
 @SessionAttributes(types = User.class)
 public class LoginController {
 
+  @Qualifier("userRepository")
   @Autowired
   private UserRepository repository;
 
@@ -32,7 +34,7 @@ public class LoginController {
     if(user != null && user.getPassword().equals(password)){
     request.getSession().setAttribute("isAdmin", user.isAdmin());
     request.getSession().setAttribute("employeeId", employeeId);
-    request.getSession().setAttribute("fullName", user.getUserName());
+    request.getSession().setAttribute("fullName", user.getFullName());
     request.getSession().setAttribute("isLogin", true);
     return "redirect:book/index";
     }
@@ -65,7 +67,7 @@ public class LoginController {
 
     request.getSession().setAttribute("isLogin", Boolean.TRUE);
     request.getSession().setAttribute("isAdmin", Boolean.FALSE);
-    return "book/index";
+    return "redirect:book/index";
 
   }
 }

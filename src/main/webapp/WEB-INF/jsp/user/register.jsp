@@ -40,7 +40,7 @@
               <form:form modelAttribute="user" method="post" class="form-horizontal form-signin-signup"
                          id="add-user-form" name="userForm" onsubmit="return validateRegistrationForm()">
               <controls:inputField label="Employee Id" name="employeeId"/>
-              <controls:inputField label="Full Name" name="userName"/>
+              <controls:inputField label="Full Name" name="fullName"/>
               <controls:inputField label="Password" name="password" type="password"/>
                 <%--<controls:passwordField label="Password" name="password"/>--%>
 

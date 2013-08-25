@@ -2,18 +2,17 @@ package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.Book;
 import com.thoughtworks.models.BookDetail;
+import com.thoughtworks.models.BookTransaction;
 import com.thoughtworks.models.Books;
-import com.thoughtworks.models.IssuedBook;
 import com.thoughtworks.repositories.BookDetailRepository;
 import com.thoughtworks.repositories.BookRepository;
-import com.thoughtworks.repositories.IssuedBookRepository;
+import com.thoughtworks.repositories.BookTransactionRepository;
 import com.thoughtworks.repositories.UserRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class BookController {
   private BookRepository repository;
 
   @Autowired
-  private IssuedBookRepository issuedBookRepository;
+  private BookTransactionRepository bookTransactionRepository;
 
   @Autowired
   private BookDetailRepository bookDetailRepository;
@@ -49,27 +48,6 @@ public class BookController {
     dataBinder.setDisallowedFields("id");
   }
 
-  @RequestMapping(value = "/book/return", method = RequestMethod.GET)
-  public String returnBooks(Map<String, Object> model, HttpServletRequest request) {
-    Object attribute = request.getSession().getAttribute("isLogin");
-    if (attribute != null) {
-      attribute = request.getSession().getAttribute("employeeId");
-      List<IssuedBook> issuedBooks = issuedBookRepository.findBooksByEmployeeId((Long) attribute);
-      Books books = new Books();
-      List<Book> bookList = new ArrayList<Book>();
-      for (IssuedBook issuedBook : issuedBooks) {
-        Book book = repository.findOne(issuedBook.getBookId());
-        book.setIssueDate(issuedBook.getIssueDate());
-        bookList.add(book);
-      }
-      books.setBookList(bookList);
-      model.put("books", books);
-      return "book/return";
-    }
-    return "redirect:/";
-
-  }
-
   @RequestMapping(value = "/book/index", method = RequestMethod.GET)
   public String index(Map<String, Object> model, HttpServletRequest request) {
     Object attribute = request.getSession().getAttribute("isLogin");
@@ -77,7 +55,7 @@ public class BookController {
       Books books = new Books();
       Iterable<Book> all = repository.findAll();
       for (Book book : all) {
-        book.setAvailableCopies(book.getBookDetails().size() - issuedBookRepository.findBooksById(book.getId()).size());
+        book.setAvailableCopies(book.getBookDetails().size() - bookTransactionRepository.findBooksById(book.getId()).size());
       }
       books.setBookList((List<Book>) all);
       model.put("books", books);
@@ -123,7 +101,7 @@ public class BookController {
       }
       this.repository.save(book);
       status.setComplete();
-      return "book/index";
+      return "redirect:book/index";
     }
   }
 
@@ -180,30 +158,16 @@ public class BookController {
     return "redirect:/";
   }
 
-  @RequestMapping(value = "/{bookId}/issue", method = RequestMethod.GET)
-  public String issueBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, ModelMap model) {
-    Object attribute = request.getSession().getAttribute("employeeId");
-    if (attribute != null) {
-      IssuedBook book = new IssuedBook();
-      book.setBookId(bookId);
-      book.setEmployeeId((Long) attribute);
-      book.setIssueDate(new Date());
-      book.setActive(true);
-      issuedBookRepository.save(book);
-//      model.addAttribute("message", "yahoo");
-      return "redirect:/book/return";
-    }
-    return "redirect:/book/index";
-  }
+
 
   @RequestMapping(value = "/book/borrower", method = RequestMethod.GET)
   public
   @ResponseBody
   String borrower(Long bookId) {
-    List<IssuedBook> issuedBooks = issuedBookRepository.findBooksById(bookId);
+    List<BookTransaction> bookTransactions = bookTransactionRepository.findBooksById(bookId);
     List<String> userNames = new ArrayList<String>();
-    for (IssuedBook book : issuedBooks) {
-      userNames.add(userRepository.findOne(book.getEmployeeId()).getUserName());
+    for (BookTransaction book : bookTransactions) {
+      userNames.add(userRepository.findOne(book.getEmployeeId()).getFullName());
     }
 
     return userNames.toString();

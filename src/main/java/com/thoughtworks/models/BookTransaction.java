@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "issued_books")
-public class IssuedBook extends BaseEntity {
+public class BookTransaction extends BaseEntity {
 
   @NotNull
   @Column(name = "bookId")

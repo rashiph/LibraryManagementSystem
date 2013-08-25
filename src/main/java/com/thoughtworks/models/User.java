@@ -24,7 +24,7 @@ public class User {
 
   @NotEmpty
   @Column(name = "userName")
-  private String userName;
+  private String fullName;
 
   @NotEmpty
   @Column(name = "password")
@@ -35,5 +35,4 @@ public class User {
 
   @Column(name = "isAdmin")
   private boolean isAdmin;
-
 }

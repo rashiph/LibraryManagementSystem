@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -59,6 +60,9 @@ public class Book extends BaseEntity {
   private List<BookDetail> bookDetails;
 
   private transient int availableCopies;
+
+  @DateTimeFormat(pattern = "yyyy/MM/dd")
+  private transient Date issueDate;
 }
 
 

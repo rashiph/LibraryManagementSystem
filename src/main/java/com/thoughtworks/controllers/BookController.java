@@ -59,6 +59,7 @@ public class BookController {
       List<Book> bookList = new ArrayList<Book>();
       for (IssuedBook issuedBook : issuedBooks) {
         Book book = repository.findOne(issuedBook.getBookId());
+        book.setIssueDate(issuedBook.getIssueDate());
         bookList.add(book);
       }
       books.setBookList(bookList);

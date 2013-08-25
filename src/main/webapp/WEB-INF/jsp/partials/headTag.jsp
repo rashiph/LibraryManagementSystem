@@ -17,10 +17,16 @@
 	<spring:url value="/webjars/jquery-ui/1.9.2/js/jquery-ui-1.9.2.custom.js" var="jQueryUi"/>
 	<script src="${jQueryUi}"></script>
 
+	<script src="/resources/js/imagesloaded.min.js"></script>
+
+	<script src="/resources/js/jquery.qtip.min.js"></script>
+
 	<spring:url value="/webjars/jquery-ui/1.9.2/css/smoothness/jquery-ui-1.9.2.custom.css" var="jQueryUiCss"/>
 	<link href="${jQueryUiCss}" rel="stylesheet"/>
 
 	<link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+
+	<link href="<c:url value="/resources/css/jquery.qtip.min.css"/>" rel="stylesheet">
 
 	<!-- Bootstrap responsive -->
 	<link href="<c:url value="/resources/css/bootstrap-responsive.min.css"/>" rel="stylesheet">

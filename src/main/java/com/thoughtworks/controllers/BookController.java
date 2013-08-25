@@ -7,8 +7,10 @@ import com.thoughtworks.models.IssuedBook;
 import com.thoughtworks.repositories.BookDetailRepository;
 import com.thoughtworks.repositories.BookRepository;
 import com.thoughtworks.repositories.IssuedBookRepository;
+import com.thoughtworks.repositories.UserRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,7 +22,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @Controller
@@ -35,21 +40,49 @@ public class BookController {
   @Autowired
   private BookDetailRepository bookDetailRepository;
 
+  @Qualifier("userRepository")
+  @Autowired
+  private UserRepository userRepository;
+
   @InitBinder
   public void setAllowedFields(WebDataBinder dataBinder) {
     dataBinder.setDisallowedFields("id");
   }
 
-  @RequestMapping(value = "/book/index", method = RequestMethod.GET)
-  public String index(Map<String, Object> model) {
-    Books books = new Books();
-    Iterable<Book> all = repository.findAll();
-    for (Book book : all) {
-      book.setAvailableCopies(book.getBookDetails().size() - issuedBookRepository.findNumberOfBooksById(book.getId()).size());
+  @RequestMapping(value = "/book/return", method = RequestMethod.GET)
+  public String returnBooks(Map<String, Object> model, HttpServletRequest request) {
+    Object attribute = request.getSession().getAttribute("isLogin");
+    if (attribute != null) {
+      attribute = request.getSession().getAttribute("employeeId");
+      List<IssuedBook> issuedBooks = issuedBookRepository.findBooksByEmployeeId((Long) attribute);
+      Books books = new Books();
+      List<Book> bookList = new ArrayList<Book>();
+      for (IssuedBook issuedBook : issuedBooks) {
+        Book book = repository.findOne(issuedBook.getBookId());
+        bookList.add(book);
+      }
+      books.setBookList(bookList);
+      model.put("books", books);
+      return "book/return";
     }
-    books.setBookList((List<Book>) all);
-    model.put("books", books);
-    return "book/index";
+    return "redirect:/";
+
+  }
+
+  @RequestMapping(value = "/book/index", method = RequestMethod.GET)
+  public String index(Map<String, Object> model, HttpServletRequest request) {
+    Object attribute = request.getSession().getAttribute("isLogin");
+    if (attribute != null) {
+      Books books = new Books();
+      Iterable<Book> all = repository.findAll();
+      for (Book book : all) {
+        book.setAvailableCopies(book.getBookDetails().size() - issuedBookRepository.findBooksById(book.getId()).size());
+      }
+      books.setBookList((List<Book>) all);
+      model.put("books", books);
+      return "book/index";
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -146,18 +179,32 @@ public class BookController {
     return "redirect:/";
   }
 
-  @RequestMapping(value = "/books/{bookId}/issue", method = RequestMethod.GET)
-  public String issueBook(@Valid @PathVariable("bookId") int bookId, SessionStatus status, HttpServletRequest request, ModelMap model) {
+  @RequestMapping(value = "/{bookId}/issue", method = RequestMethod.GET)
+  public String issueBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, ModelMap model) {
     Object attribute = request.getSession().getAttribute("employeeId");
     if (attribute != null) {
       IssuedBook book = new IssuedBook();
       book.setBookId(bookId);
-      book.setEmployeeId((Integer) attribute);
+      book.setEmployeeId((Long) attribute);
+      book.setIssueDate(new Date());
       book.setActive(true);
       issuedBookRepository.save(book);
-      model.addAttribute("message", "yahoo");
-      return "book/index";
+//      model.addAttribute("message", "yahoo");
+      return "redirect:/book/return";
     }
-    return "book/index";
+    return "redirect:/book/index";
+  }
+
+  @RequestMapping(value = "/book/borrower", method = RequestMethod.GET)
+  public
+  @ResponseBody
+  String borrower(Long bookId) {
+    List<IssuedBook> issuedBooks = issuedBookRepository.findBooksById(bookId);
+    List<String> userNames = new ArrayList<String>();
+    for (IssuedBook book : issuedBooks) {
+      userNames.add(userRepository.findOne(book.getEmployeeId()).getUserName());
+    }
+
+    return userNames.toString();
   }
 }

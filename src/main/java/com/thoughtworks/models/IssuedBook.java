@@ -29,7 +29,7 @@ public class IssuedBook extends BaseEntity {
 
   @NotNull
   @Column(name = "employeeId")
-  private int employeeId;
+  private Long employeeId;
 
   @NotNull
   @Column(name = "isActive")

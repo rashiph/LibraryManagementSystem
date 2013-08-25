@@ -51,14 +51,19 @@ public class BookTransactionController {
   public String issueBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, ModelMap model) {
     Object attribute = request.getSession().getAttribute("employeeId");
     if (attribute != null) {
-      BookTransaction book = new BookTransaction();
-      book.setBookId(bookId);
-      book.setEmployeeId((Long) attribute);
-      book.setIssueDate(new Date());
-      book.setActive(true);
-      bookTransactionRepository.save(book);
-//      model.addAttribute("message", "yahoo");
-      return "redirect:/book/return";
+      BookTransaction bookTransaction = bookTransactionRepository.findBookByEmployeeIdAndBookId((Long) attribute, bookId);
+      if (bookTransaction == null) {
+        BookTransaction book = new BookTransaction();
+        book.setBookId(bookId);
+        book.setEmployeeId((Long) attribute);
+        book.setIssueDate(new Date());
+        book.setActive(true);
+        bookTransactionRepository.save(book);
+        return "redirect:/book/return";
+      } else {
+        //Display message for duplicate issue.
+        return "redirect:/book/index";
+      }
     }
     return "redirect:/";
   }

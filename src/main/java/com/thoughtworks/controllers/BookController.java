@@ -138,7 +138,7 @@ public class BookController {
       }
       this.repository.save(book);
       status.setComplete();
-      return "book/index";
+      return "redirect:/book/index";
     }
   }
 

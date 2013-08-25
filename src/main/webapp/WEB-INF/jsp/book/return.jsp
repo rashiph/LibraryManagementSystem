@@ -6,6 +6,7 @@
 <%@ taglib prefix="datatables" uri="http://github.com/dandelion/datatables" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <html lang="en">
 
 <jsp:include page="../partials/headTag.jsp"/>
@@ -53,7 +54,7 @@
 					<c:out value="${book.edition}"/>
 				</datatables:column>
 				<datatables:column title="Issued Date">
-					<c:out value="${book.issueDate}"/>
+					<fmt:formatDate value="${book.issueDate}" pattern="yyyy/MM/dd"></fmt:formatDate>
 				</datatables:column>
 				<datatables:column title="Action" sortable="false" searchable="false">
 					<spring:url value="/{bookId}/return" var="returnBookUrl">

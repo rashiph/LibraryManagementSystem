@@ -225,8 +225,9 @@
 }
 .form-signin-signup input[type="text"],
 .form-signin-signup input[type="password"] {
-  width: 70%;
-  height: 30px;
+  /*width: 70%;*/
+  /*height: 30px;*/
+  margin-bottom: 15px;
 }
 .form-signin-signup input {
   margin-bottom: 15px;

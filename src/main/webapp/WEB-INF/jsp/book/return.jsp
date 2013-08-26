@@ -36,7 +36,14 @@
 
 		</div>
 		<div class="row-fluid">
-
+			<div class="alert-block">
+				<div class="alert-success">
+					${successMessage}
+				</div>
+				<div class="alert-error">
+					${errorMessage}
+				</div>
+			</div>
 			<jsp:useBean id="books" scope="request" type="com.thoughtworks.models.Books"/>
 
 			<datatables:table id="books" data="${books.bookList}" cdn="true" row="book" theme="bootstrap2"

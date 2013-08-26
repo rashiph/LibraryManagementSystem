@@ -11,18 +11,21 @@ import com.thoughtworks.repositories.UserRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @Controller
@@ -64,20 +67,24 @@ public class BookController {
 
   @RequestMapping(value = "/new", method = RequestMethod.GET)
   public String initCreationOfBook(Map<String, Object> model, HttpServletRequest request) {
-    Object attribute = request.getSession().getAttribute("isAdmin");
+    Object attribute = request.getSession().getAttribute("isLogin");
     if (attribute != null) {
-      boolean isAdmin = Boolean.parseBoolean(attribute.toString());
-      if (isAdmin) {
-        Book book = new Book();
-        model.put("book", book);
-        return "book/add";
+      attribute = request.getSession().getAttribute("isAdmin");
+      if (attribute != null) {
+        boolean isAdmin = Boolean.parseBoolean(attribute.toString());
+        if (isAdmin) {
+          Book book = new Book();
+          model.put("book", book);
+          return "book/add";
+        }
       }
+      return "book/index";
     }
-    return "book/index";
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.POST)
-  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result, SessionStatus status, HttpServletRequest request) {
+  public String processCreationOfBook(@ModelAttribute("book") @Valid Book book, BindingResult result, SessionStatus status, HttpServletRequest request, RedirectAttributes attributes) {
     Integer noOfCopies = Integer.valueOf(request.getParameter("noOfCopies"));
     Date dateOfPurchase = new Date((request.getParameter("dateOfPurchase")));
 
@@ -99,15 +106,27 @@ public class BookController {
       }
       this.repository.save(book);
       status.setComplete();
+      attributes.addFlashAttribute("successMessage", "Book added successfully!");
       return "redirect:book/index";
     }
   }
 
   @RequestMapping(value = "/{bookId}/edit", method = RequestMethod.GET)
-  public String initUpdateOfBook(@Valid @PathVariable("bookId") Long bookId, Model model) {
-    Book book = this.repository.findOne(bookId);
-    model.addAttribute(book);
-    return "book/add";
+  public String initUpdateOfBook(@Valid @PathVariable("bookId") Long bookId, Model model, HttpServletRequest request) {
+    Object attribute = request.getSession().getAttribute("isLogin");
+    if (attribute != null) {
+      attribute = request.getSession().getAttribute("isAdmin");
+      if (attribute != null) {
+        boolean isAdmin = Boolean.parseBoolean(attribute.toString());
+        if (isAdmin) {
+          Book book = this.repository.findOne(bookId);
+          model.addAttribute(book);
+          return "book/add";
+        }
+      }
+      return "book/index";
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/{bookId}/edit", method = RequestMethod.PUT)
@@ -148,12 +167,11 @@ public class BookController {
 //    status.setComplete();
 //    response.setStatus(200);
 
-      Book book = repository.findOne(bookId);
-      List<BookDetail> bookDetails = book.getBookDetails();
-      model.put("bookDetails", bookDetails);
-      return "book/index";
+    Book book = repository.findOne(bookId);
+    List<BookDetail> bookDetails = book.getBookDetails();
+    model.put("bookDetails", bookDetails);
+    return "book/index";
   }
-
 
 
   @RequestMapping(value = "/book/borrower", method = RequestMethod.GET)
@@ -165,7 +183,6 @@ public class BookController {
     for (BookTransaction book : bookTransactions) {
       userNames.add(userRepository.findOne(book.getEmployeeId()).getFullName());
     }
-
     return userNames.toString();
   }
 }

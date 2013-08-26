@@ -7,10 +7,10 @@ import com.thoughtworks.repositories.BookRepository;
 import com.thoughtworks.repositories.BookTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -48,34 +48,41 @@ public class BookTransactionController {
   }
 
   @RequestMapping(value = "/{bookId}/issue", method = RequestMethod.GET)
-  public String issueBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, ModelMap model) {
-    Object attribute = request.getSession().getAttribute("employeeId");
+  public String issueBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, RedirectAttributes attributes) {
+    Object attribute = request.getSession().getAttribute("isLogin");
     if (attribute != null) {
-      BookTransaction bookTransaction = bookTransactionRepository.findBookByEmployeeIdAndBookId((Long) attribute, bookId);
-      if (bookTransaction == null) {
-        BookTransaction book = new BookTransaction();
-        book.setBookId(bookId);
-        book.setEmployeeId((Long) attribute);
-        book.setIssueDate(new Date());
-        book.setActive(true);
-        bookTransactionRepository.save(book);
-        return "redirect:/book/return";
-      } else {
-        //Display message for duplicate issue.
-        return "redirect:/book/index";
+      attribute = request.getSession().getAttribute("employeeId");
+      if (attribute != null) {
+        BookTransaction bookTransaction = bookTransactionRepository.findBookByEmployeeIdAndBookId((Long) attribute, bookId);
+        if (bookTransaction == null) {
+          BookTransaction book = new BookTransaction();
+          book.setBookId(bookId);
+          book.setEmployeeId((Long) attribute);
+          book.setIssueDate(new Date());
+          book.setActive(true);
+          bookTransactionRepository.save(book);
+          attributes.addFlashAttribute("successMessage","Book issued successfully!!");
+          return "redirect:/book/return";
+        } else {
+          attributes.addFlashAttribute("errorMessage","You already have a copy of this book.");
+          return "redirect:/book/index";
+        }
       }
     }
     return "redirect:/";
   }
 
   @RequestMapping(value = "/{bookId}/return", method = RequestMethod.GET)
-  public String returnBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, ModelMap model) {
-    Object attribute = request.getSession().getAttribute("employeeId");
+  public String returnBook(@Valid @PathVariable("bookId") Long bookId, HttpServletRequest request, RedirectAttributes attributes) {
+    Object attribute = request.getSession().getAttribute("isLogin");
     if (attribute != null) {
-      BookTransaction bookTransaction = bookTransactionRepository.findBookByEmployeeIdAndBookId((Long) attribute, bookId);
-      bookTransaction.setReturnedDate(new Date());
-      bookTransactionRepository.save(bookTransaction);
-      return "redirect:/book/return";
+      attribute = request.getSession().getAttribute("employeeId");
+      if (attribute != null) {
+        BookTransaction bookTransaction = bookTransactionRepository.findBookByEmployeeIdAndBookId((Long) attribute, bookId);
+        bookTransaction.setReturnedDate(new Date());
+        bookTransactionRepository.save(bookTransaction);
+        return "redirect:/book/return";
+      }
     }
     return "redirect:/";
   }

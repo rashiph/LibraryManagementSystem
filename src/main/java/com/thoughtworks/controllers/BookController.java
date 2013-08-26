@@ -11,6 +11,7 @@ import com.thoughtworks.repositories.UserRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,10 +22,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @NoArgsConstructor
 @Controller
@@ -144,18 +142,16 @@ public class BookController {
 
   @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
   public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status, HttpServletResponse response, HttpServletRequest request, Map<String, Object> model) {
-    Book book = repository.findOne(bookId);
-    book.setActive(false);
-    this.repository.save(book);
-    status.setComplete();
-    response.setStatus(200);
-//
-//      Iterable<BookDetail> bookDetail = bookDetailRepository.findAll();
-//      List<BookDetail> bookDetails = new ArrayList<BookDetail>();
-//      bookDetails.addAll((Collection<? extends BookDetail>)bookDetail);
-//      model.put("bookDetails", bookDetails);
-//      return "book/index";
-    return "redirect:/";
+//    Book book = repository.findOne(bookId);
+//    book.setActive(false);
+//    this.repository.save(book);
+//    status.setComplete();
+//    response.setStatus(200);
+
+      Book book = repository.findOne(bookId);
+      List<BookDetail> bookDetails = book.getBookDetails();
+      model.put("bookDetails", bookDetails);
+      return "book/index";
   }
 
 

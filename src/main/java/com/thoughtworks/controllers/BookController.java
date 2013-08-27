@@ -138,8 +138,10 @@ public class BookController {
       return "book/add";
     } else {
       if (noOfCopies > 0) {
-        if (book.getBookDetails().size() > 0) {
-          bookDetailRepository.delete(book.getBookDetails());
+        List<BookDetail> bookDetails1 = book.getBookDetails();
+        if (bookDetails1.size() > 0) {
+          for(int i=0;i< bookDetails1.size();i++)
+          bookDetailRepository.deleteById(bookDetails1.get(i).getId());
         }
         BookDetail bookDetail;
         List<BookDetail> bookDetails = new ArrayList<BookDetail>();

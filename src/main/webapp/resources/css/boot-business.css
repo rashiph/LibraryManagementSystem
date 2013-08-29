@@ -258,6 +258,9 @@
 footer {
   color: white;
   padding-top: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 .quick-links {
   list-style: none;
@@ -285,7 +288,7 @@ footer {
   margin-left: 25px;
 }
 .footer-divider {
-  border-top: 0;  
+  border-top: 0;
   border-bottom: 1px solid #333;
 }
 /* End: Bootbusiness specific CSS */

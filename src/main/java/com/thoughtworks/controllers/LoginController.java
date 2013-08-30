@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -58,16 +59,17 @@ public class LoginController {
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String register(@ModelAttribute("user") @Valid User user, BindingResult result, HttpServletRequest request) {
+  public String register(@ModelAttribute("user") @Valid User user, BindingResult result, HttpServletRequest request, RedirectAttributes attributes) {
     if (result.hasErrors()) {
-      return "user/register";
+        attributes.addFlashAttribute("errorMassage","you not registered...........");
+        return "user/register";
     }
     user.setActive(true);
     this.repository.save(user);
-
     request.getSession().setAttribute("isLogin", Boolean.TRUE);
     request.getSession().setAttribute("isAdmin", Boolean.FALSE);
-    return "redirect:book/index";
+      attributes.addFlashAttribute("successMessage","you are registered successfully........");
+      return "redirect:book/index";
 
   }
 }

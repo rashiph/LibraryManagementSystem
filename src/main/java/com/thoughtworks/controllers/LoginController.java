@@ -29,19 +29,23 @@ public class LoginController {
     return "user/index";
   }
 
+
   @RequestMapping(value = "/", method = RequestMethod.POST)
   public String login(@RequestParam("employeeId") Long employeeId, @RequestParam("password") String password, HttpServletRequest request) {
     User user = repository.findOne(employeeId);
     if(user != null && user.getPassword().equals(password)){
+
     request.getSession().setAttribute("isAdmin", user.isAdmin());
     request.getSession().setAttribute("employeeId", employeeId);
     request.getSession().setAttribute("fullName", user.getFullName());
     request.getSession().setAttribute("isLogin", true);
+
     return "redirect:book/index";
     }
     request.getSession().setAttribute("isAdmin", user.isAdmin());
     request.getSession().setAttribute("isLogin", false);
-    return "redirect:/";
+
+        return "redirect:/";
   }
 
   @RequestMapping(value = "/logout", method = RequestMethod.GET)

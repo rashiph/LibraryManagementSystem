@@ -35,4 +35,7 @@ public class User {
 
   @Column(name = "isAdmin")
   private boolean isAdmin;
+
 }
+
+//

@@ -38,7 +38,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="<spring:url value="/oups.html" htmlEscape="true" />">
+								<a href="<spring:url value="/suggest" htmlEscape="true" />">
 									<i class=" icon-question-sign"></i>
 									Suggest A Book
 								</a>

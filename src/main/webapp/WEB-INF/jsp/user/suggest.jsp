@@ -27,7 +27,8 @@
 				<div class="widget-body">
 					<div class="center-align">
 
-						<form:form modelAttribute="suggestBook" method="POST" class="form-horizontal form-signin-signup" id="suggest-Book-form">
+						<form:form modelAttribute="suggestBook" method="POST" class="form-horizontal form-signin-signup"
+						id="suggest-Book-form">
 							<controls:inputField label="Book Name" name="bookName"/>
 							<controls:inputField label="Author Name" name="authorName"/>
 							<controls:inputField label="Edition" name="edition"/>

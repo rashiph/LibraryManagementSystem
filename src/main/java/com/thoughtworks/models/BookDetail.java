@@ -23,6 +23,6 @@ public class BookDetail extends BaseEntity {
 
   @NotNull
   @Column(name = "IsActive")
-  private boolean isActive;
+  private Boolean isActive;
 
 }

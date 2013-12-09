@@ -34,7 +34,7 @@ public class User {
   private boolean isActive;
 
   @Column(name = "isAdmin")
-  private boolean isAdmin;
+  private Boolean isAdmin;
 
 }
 

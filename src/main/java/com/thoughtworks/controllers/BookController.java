@@ -1,11 +1,7 @@
 package com.thoughtworks.controllers;
 
 import com.thoughtworks.models.*;
-import com.thoughtworks.repositories.BookDetailRepository;
-import com.thoughtworks.repositories.BookRepository;
-import com.thoughtworks.repositories.BookTransactionRepository;
-import com.thoughtworks.repositories.UserRepository;
-import com.thoughtworks.repositories.SuggestBookRepository;
+import com.thoughtworks.repositories.*;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,12 +36,11 @@ public class BookController {
   @Qualifier("userRepository")
   @Autowired
   private UserRepository userRepository;
-    @Autowired
-    private SuggestBookRepository suggestBookRepository;
+  @Autowired
+  private SuggestBookRepository suggestBookRepository;
 
 
-
-    @InitBinder
+  @InitBinder
   public void setAllowedFields(WebDataBinder dataBinder) {
     dataBinder.setDisallowedFields("id");
   }
@@ -100,7 +94,7 @@ public class BookController {
           bookDetail = new BookDetail();
 
           bookDetail.setDateOfPurchase(dateOfPurchase);
-          bookDetail.setActive(true);
+          bookDetail.setIsActive(true);
           bookDetail.setBook(book);
           bookDetails.add(bookDetail);
         }
@@ -142,8 +136,8 @@ public class BookController {
       if (noOfCopies > 0) {
         List<BookDetail> bookDetails1 = book.getBookDetails();
         if (bookDetails1.size() > 0) {
-          for(int i=0;i< bookDetails1.size();i++)
-          bookDetailRepository.deleteById(bookDetails1.get(i).getId());
+          for (int i = 0; i < bookDetails1.size(); i++)
+            bookDetailRepository.deleteById(bookDetails1.get(i).getId());
         }
         BookDetail bookDetail;
         List<BookDetail> bookDetails = new ArrayList<BookDetail>();
@@ -151,7 +145,7 @@ public class BookController {
           bookDetail = new BookDetail();
 
           bookDetail.setDateOfPurchase(dateOfPurchase);
-          bookDetail.setActive(true);
+          bookDetail.setIsActive(true);
           bookDetail.setBook(book);
           bookDetails.add(bookDetail);
         }
@@ -162,21 +156,6 @@ public class BookController {
       return "redirect:/book/index";
     }
   }
-
-//  @RequestMapping(value = "/books/{bookId}/deleteBook", method = RequestMethod.GET, headers = "Accept=application/json")
-//  public String deleteBook(@PathVariable("bookId") Long bookId, SessionStatus status, HttpServletResponse response, HttpServletRequest request, Map<String, Object> model) {
-////    Book book = repository.findOne(bookId);
-////    book.setActive(false);
-////    this.repository.save(book);
-////    status.setComplete();
-////    response.setStatus(200);
-//
-//    Book book = repository.findOne(bookId);
-//    List<BookDetail> bookDetails = book.getBookDetails();
-//    model.put("bookDetails", bookDetails);
-//    return "book/index";
-//  }
-
 
   @RequestMapping(value = "/book/borrower", method = RequestMethod.GET)
   public
@@ -189,23 +168,22 @@ public class BookController {
     }
     return userNames.toString();
   }
-    @RequestMapping(value = "/suggest", method = RequestMethod.GET)
-    public String suggestBook(Map<String, Object> model, HttpServletRequest request)
-    {
 
-        SuggestBook suggestBook=new SuggestBook();
-         model.put("suggestBook", suggestBook);
-        return "user/suggest";
-    }
+  @RequestMapping(value = "/suggest", method = RequestMethod.GET)
+  public String suggestBook(Map<String, Object> model) {
 
-    @RequestMapping(value = "/suggest", method = RequestMethod.POST)
-    public String suggestBook( @ModelAttribute("suggestBook") @Valid SuggestBook suggestBook, HttpServletRequest request,SessionStatus status,RedirectAttributes attributes) {
+    SuggestBook suggestBook = new SuggestBook();
+    model.put("suggestBook", suggestBook);
+    return "user/suggest";
+  }
 
-         Long employeeId = (Long) request.getSession().getAttribute("employeeId");
-          this.suggestBookRepository.save(suggestBook);
-         status.setComplete();
-        attributes.addFlashAttribute("successMessage", "Book suggest bb successfully!");
-        return "redirect:/book/index";
-}
+  @RequestMapping(value = "/suggest", method = RequestMethod.POST)
+  public String suggestBook(@ModelAttribute("suggestBook") @Valid SuggestBook suggestBook, HttpServletRequest request, SessionStatus status, RedirectAttributes attributes) {
 
+    Long employeeId = (Long) request.getSession().getAttribute("employeeId");
+    this.suggestBookRepository.save(suggestBook);
+    status.setComplete();
+    attributes.addFlashAttribute("successMessage", "Book suggest bb successfully!");
+    return "redirect:/book/index";
+  }
 }

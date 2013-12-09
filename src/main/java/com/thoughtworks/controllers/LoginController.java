@@ -35,13 +35,14 @@ public class LoginController {
     User user = repository.findOne(employeeId);
     if(user != null && user.getPassword().equals(password)){
 
-    request.getSession().setAttribute("isAdmin", user.isAdmin());
+    request.getSession().setAttribute("isAdmin", user.getIsAdmin());
     request.getSession().setAttribute("employeeId", employeeId);
     request.getSession().setAttribute("fullName", user.getFullName());
     request.getSession().setAttribute("isLogin", true);
 
     return "redirect:book/index";
     }
+//    request.getSession().setAttribute("isAdmin", user.getIsAdmin());
     request.getSession().setAttribute("isLogin", false);
 
         return "redirect:/";

@@ -30,7 +30,7 @@ public class Book extends BaseEntity {
   private String category;
 
   @Column(name = "edition")
-  private int edition;
+  private Integer edition;
 
   @Column(name = "price")
   private Float price;
@@ -52,14 +52,14 @@ public class Book extends BaseEntity {
   private String updatedBy;
 
   @Column(name = "isActive")
-  private boolean isActive;
+  private Boolean isActive;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "book")
   @Column(nullable = false)
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<BookDetail> bookDetails;
 
-  private transient int availableCopies;
+  private transient Integer availableCopies;
 
   @DateTimeFormat(pattern = "yyyy/MM/dd")
   private transient Date issueDate;

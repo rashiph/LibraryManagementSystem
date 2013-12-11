@@ -3,7 +3,6 @@ package com.thoughtworks.infrastructure;
 import com.google.common.base.Function;
 import com.natpryce.makeiteasy.Instantiator;
 import com.natpryce.makeiteasy.Property;
-import org.springframework.hateoas.Identifiable;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -14,7 +13,7 @@ import java.util.Set;
 import static com.google.common.collect.Lists.transform;
 import static com.natpryce.makeiteasy.MakeItEasy.*;
 
-public class InvalidType<T extends Identifiable, U> {
+public class InvalidType<T, U> {
   private final T instance;
   private Set<ConstraintViolation<T>> constraintViolations;
   private Validator validator;

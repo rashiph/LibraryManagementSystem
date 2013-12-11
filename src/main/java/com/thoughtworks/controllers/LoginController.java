@@ -68,7 +68,7 @@ public class LoginController {
         attributes.addFlashAttribute("errorMassage","you not registered...........");
         return "user/register";
     }
-    user.setActive(true);
+    user.setIsActive(true);
     this.repository.save(user);
     request.getSession().setAttribute("isLogin", Boolean.TRUE);
     request.getSession().setAttribute("isAdmin", Boolean.FALSE);

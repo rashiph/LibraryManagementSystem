@@ -31,11 +31,8 @@ public class User {
   private String password;
 
   @Column(name = "isActive")
-  private boolean isActive;
+  private Boolean isActive;
 
   @Column(name = "isAdmin")
   private Boolean isAdmin;
-
 }
-
-//
